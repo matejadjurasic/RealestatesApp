@@ -17,6 +17,15 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+     public function suggestedProfiles() {
+        return $this->hasMany(SuggestedProfile::class);
+    }
+
+    public function favoriteProfiles() {
+        return $this->hasMany(FavoriteProfile::class);
+    }
+
     protected $fillable = [
         'name',
         'email',
