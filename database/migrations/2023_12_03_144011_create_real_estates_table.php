@@ -16,7 +16,10 @@ return new class extends Migration
         Schema::create('real_estates', function (Blueprint $table) {
             $table->id();
             $table->string('username');
+            $table->string('profile_picture_url');
             $table->text('description');
+            $table->integer('follows_count');
+            $table->integer('followers_count');
             $table->double('price');
             $table->timestamps();
         });

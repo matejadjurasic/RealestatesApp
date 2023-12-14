@@ -13,10 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('suggested_profiles', function (Blueprint $table) {
-            $table->id();
-            $table->string('username');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->boolean('favorite')->default(false)->after('password'); 
         });
     }
 
@@ -27,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('suggested_profiles');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('favorite');
+        });
     }
 };

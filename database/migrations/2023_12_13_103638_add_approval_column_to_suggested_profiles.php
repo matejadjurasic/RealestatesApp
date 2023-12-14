@@ -13,11 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('search_filters', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('criteria');
-            $table->timestamps();
+        Schema::table('suggested_profiles', function (Blueprint $table) {
+            $table->boolean('approval')->default(false);
         });
     }
 
@@ -28,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('search_filters');
+        Schema::table('suggested_profiles', function (Blueprint $table) {
+            $table->dropColumn('approval');
+        });
     }
 };
