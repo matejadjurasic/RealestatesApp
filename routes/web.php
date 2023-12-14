@@ -32,3 +32,4 @@ Route::post('/suggested-profiles/{profileId}/approve', [SuggestedProfileControll
 Route::post('/suggested-profiles/{profileId}/reject', [SuggestedProfileController::class, 'rejectProfile'])->name('suggested-profiles.reject');
 Route::get('/suggested-profiles/create', [SuggestedProfileController::class, 'create'])->name('suggested-profiles.create');
 Route::post('/suggested-profiles', [SuggestedProfileController::class, 'store'])->name('suggested-profiles.store');
+Route::get('/instagram/{name}',[App\Http\Controllers\instagramController::class, 'add_realestate']);
