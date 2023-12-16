@@ -13,4 +13,14 @@ class RealEstate extends Model
     {
         return $this->hasMany(FavoriteProfile::class);
     }
+
+    protected $fillable = [
+        'username',
+        'profile_picture_url',
+        'description',
+        'follows_count',
+        'followers_count',
+        'location',
+        'price',
+    ];
 }

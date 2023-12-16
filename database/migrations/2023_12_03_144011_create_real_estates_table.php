@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('username');
             $table->text('profile_picture_url');
             $table->text('description');
+            $table->string('location');
             $table->integer('follows_count');
             $table->integer('followers_count');
             $table->double('price');
