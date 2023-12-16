@@ -34,3 +34,5 @@ Route::get('/suggested-profiles/create', [SuggestedProfileController::class, 'cr
 Route::post('/suggested-profiles', [SuggestedProfileController::class, 'store'])->name('suggested-profiles.store');
 Route::get('/instagram/{name}',[App\Http\Controllers\instagramController::class, 'add_realestate']);
 Route::get('/instagram/{name}/{price}',[App\Http\Controllers\instagramController::class, 'add_realestate_database']);
+Route::get('/addrealestate/{name}/{price}',[App\Http\Controllers\realEstateController::class, 'store']);
+Route::delete('deleterealestate/{id}',[App\Http\Controllers\realEstateController::class, 'destroy']);
