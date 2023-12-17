@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SuggestedProfileController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\realEstateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,4 +42,5 @@ Route::get('/instagram/{name}/{price}',[App\Http\Controllers\instagramController
 
 Route::resource('realestates_details', SearchController::class);
 Route::get('/addrealestate/{name}/{price}',[App\Http\Controllers\realEstateController::class, 'store']);
-Route::delete('deleterealestate/{id}',[App\Http\Controllers\realEstateController::class, 'destroy']);
+Route::put('realestates/{id}/edit/updateapi', 'App\Http\Controllers\realEstateController@updateapi')->name('realestates.updateapi');
+Route::resource('realestates', realEstateController::class);

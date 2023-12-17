@@ -16,11 +16,11 @@ class RealEstate extends Model
 
     protected $fillable = [
         'username',
-        'profile_picture_url',
-        'description',
-        'follows_count',
-        'followers_count',
+        //'profile_picture_url',
+        //'description',
+        //'follows_count',
+        //'followers_count',
         'location',
-        'price',
+        'price'
     ];
 }
