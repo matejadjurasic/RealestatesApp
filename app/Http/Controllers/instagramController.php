@@ -126,7 +126,8 @@ class instagramController extends Controller
         curl_close($ch);
         $responseArray = json_decode($response,true);
 
-        DB::insert('insert into real_estates (username,profile_picture_url,description,follows_count,followers_count,price) values (?,?,?,?,?,?)',[$responseArray['business_discovery']['username'],
+        DB::insert('insert into real_estates (username,profile_picture_url,description,follows_count,followers_count,price)
+        values (?,?,?,?,?,?)',[$responseArray['business_discovery']['username'],
         $responseArray['business_discovery']['profile_picture_url'],$responseArray['business_discovery']['biography'],
         $responseArray['business_discovery']['follows_count'],$responseArray['business_discovery']['followers_count'],
         $price]);
