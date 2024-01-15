@@ -9,6 +9,11 @@ class FavoriteProfile extends Model
 {
     use HasFactory;
 
+    protected $fillable =[
+        'user_id',
+        'realestate_id'
+    ];
+
     public function user() {
         return $this->belongsTo(User::class);
     }

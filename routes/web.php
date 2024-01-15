@@ -44,3 +44,8 @@ Route::resource('realestates_details', SearchController::class);
 Route::get('/addrealestate/{name}/{price}',[App\Http\Controllers\realEstateController::class, 'store']);
 Route::put('realestates/{id}/edit/updateapi', 'App\Http\Controllers\realEstateController@updateapi')->name('realestates.updateapi');
 Route::resource('realestates', realEstateController::class);
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/favorites/add/{realEstateId}', 'App\Http\Controllers\favoriteController@store')->name('favorites.add');
+    Route::delete('/favorites/remove/{realEstateId}', 'App\Http\Controllers\favoriteController@destroy')->name('favorites.remove');
+});

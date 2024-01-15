@@ -14,8 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('favorite_profiles', function (Blueprint $table) {
+           
             $table->id();
             $table->timestamps();
+
+           
         });
     }
 
