@@ -41,7 +41,10 @@ Route::get('/instagram/{name}/{price}',[App\Http\Controllers\instagramController
 
 
 Route::resource('realestates_details', SearchController::class);
-Route::get('/addrealestate/{name}/{price}',[App\Http\Controllers\realEstateController::class, 'store']);
+Route::get('realestates/{id}','App\Http\Controllers\realEstateController@show')->name('realestates.showestate');
+Route::get('realestates/{name}/{price}/{location}','App\Http\Controllers\realEstateController@store')->name('realestates.addestate');
+//Route::put('realestates/{id}/{location}', 'App\Http\Controllers\realEstateController@update')->name('realestates.updatelocation');
+//Route::post('realestates/{id}/{price}/{location}', 'App\Http\Controllers\realEstateController@update')->name('realestates.updateprice');
 Route::put('realestates/{id}/edit/updateapi', 'App\Http\Controllers\realEstateController@updateapi')->name('realestates.updateapi');
 Route::resource('realestates', realEstateController::class);
 

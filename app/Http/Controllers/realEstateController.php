@@ -6,6 +6,7 @@ use App\Models\RealEstate;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\Support\Jsonable;
 
 define('ENDPOINT_BASE', 'https://graph.facebook.com/v18.0/');
 define('ACCESS_TOKEN', 'EAAQSaZAhOZCsYBO38CPLyJoEAJlEE5ZADZC8QPahn9TJRL48KZCrS2jvdZAFNe1RwGt8HukemIJD2dm9mPQiUfgTnpn7DlF2rG0eqbR3RQXOZBLuYvCepvpglRzByGI2ZBB5K60Q7MgQG3SdYzczueW4vZBMWXKSZB4K0XruRpiv0FC34uGG327fQ9J45ZBZAE2dJtw7');
@@ -22,8 +23,9 @@ class realEstateController extends Controller
     public function index()
     {
         $estates = RealEstate::latest()->paginate(5);
-
-        return view('realestates.index',compact('estates'))->with(request()->input('page'));
+        
+        //return view('realestates.index',compact('estates'))->with(request()->input('page'));
+        return response()->json($estates,200,[],JSON_PRETTY_PRINT);
     }
 
     /**
@@ -44,12 +46,13 @@ class realEstateController extends Controller
      */
     public function store(Request $request)
     {
+        /*
         $request->validate([
             'name'=> 'required',
             'price'=> 'required',
             'location'=> 'required'
         ]);
-
+        */
         $name = $request->name;
         $price = $request->price;
         $location = $request->location;
@@ -82,10 +85,13 @@ class realEstateController extends Controller
             $responseArray['business_discovery']['follows_count'],$responseArray['business_discovery']['followers_count'],
             $price]);
         } catch(\Exception $e){
-            return redirect()->route('realestates.create')->with('failure','Invalid Parametars');
+            //return redirect()->route('realestates.create')->with('failure','Invalid Parametars');
+            return response()->json($e->getMessage(), 200, [], JSON_PRETTY_PRINT);
         }
+        $latest = RealEstate::orderBy('id', 'DESC')->first();
         //return view('instagram-profile',['responseArray'=>$responseArray]);
-        return redirect()->route('realestates.index')->with('success','RealEstate created successfully');
+        //return redirect()->route('realestates.index')->with('success','RealEstate created successfully');
+        return response()->json($latest, 200, [], JSON_PRETTY_PRINT);
     }
 
     /**
@@ -98,7 +104,8 @@ class realEstateController extends Controller
     public function show($id)
     {
         $estate = RealEstate::find($id);
-        return view('realestates.show',compact('estate'));
+        //return view('realestates.show',compact('estate'));
+        return response()->json($estate, 200, [], JSON_PRETTY_PRINT);
     }
 
     /**
@@ -120,22 +127,28 @@ class realEstateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $estate = RealEstate::find($id);
-        $request->validate([
+        $estate = RealEstate::find($request->id);
+        /*$request->validate([
             'price'=> 'required',
             'location'=> 'required'
         ]);
+        */
+        //$estate->update($request->all());
 
-        $estate->update($request->all());
+        $estate->price = $request->price;
+        $estate->location = $request->location;
 
-        return redirect()->route('realestates.index')->with('success','RealEstate updated successfully');
+        $estate->save();
+
+        //return redirect()->route('realestates.index')->with('success','RealEstate updated successfully');
+        return response()->json($estate, 200, [], JSON_PRETTY_PRINT);
     }
 
-    public function updateapi(Request $request,$id)
+    public function updateapi(Request $request)
     {
-        $estate = RealEstate::find($id);
+        $estate = RealEstate::find($request->id);
 
         $name = $estate->username;
        
@@ -168,10 +181,12 @@ class realEstateController extends Controller
             ['followers_count' => $responseArray['business_discovery']['followers_count']]);
 
         } catch(\Exception $e){
-            return redirect()->route('realestates.index')->with('failure',$e->getMessage());
+            //return redirect()->route('realestates.index')->with('failure',$e->getMessage());
+            return response()->json($e->getMessage(), 200, [], JSON_PRETTY_PRINT);
         }
         //return view('instagram-profile',['responseArray'=>$responseArray]);
-        return redirect()->route('realestates.index')->with('success','RealEstate updated successfully');
+        //return redirect()->route('realestates.index')->with('success','RealEstate updated successfully');
+        return response()->json($estate, 200, [], JSON_PRETTY_PRINT);
     }
 
     /**
@@ -182,8 +197,11 @@ class realEstateController extends Controller
      */
     public function destroy($id)
     {
+        $estate = RealEstate::find($id);
+
         DB::delete('delete from real_estates where id = ?',[$id]);
 
-        return redirect()->route('realestates.index');
+        //return redirect()->route('realestates.index');
+        return response()->json($estate, 200, [], JSON_PRETTY_PRINT);
     }
 }
