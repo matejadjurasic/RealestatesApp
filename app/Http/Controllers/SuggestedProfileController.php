@@ -13,13 +13,15 @@ class SuggestedProfileController extends Controller
     public function index()
     {
         $suggestedProfiles = SuggestedProfile::all();
-        return view('suggested-profiles.index', compact('suggestedProfiles'));
+        //return view('suggested-profiles.index', compact('suggestedProfiles'));
+        return response()->json($suggestedProfiles, 200, [], JSON_PRETTY_PRINT);
     }
 
     public function show($profileId)
     {
         $profile = SuggestedProfile::find($profileId);
-        return view('suggested-profiles.show', compact('profile'));
+        //return view('suggested-profiles.show', compact('profile'));
+        return response()->json($profile, 200, [], JSON_PRETTY_PRINT);
     }
 
     public function approveProfile($profileId)
@@ -30,7 +32,8 @@ class SuggestedProfileController extends Controller
             $profile->update(['approval' => true]);
         }
 
-        return redirect()->route('suggested-profiles.index');
+        //return redirect()->route('suggested-profiles.index');
+        return response()->json($profile, 200, [], JSON_PRETTY_PRINT);
     }
 
     public function rejectProfile($profileId)
@@ -41,7 +44,8 @@ class SuggestedProfileController extends Controller
             $profile->update(['approval' => false]);
         }
 
-        return redirect()->route('suggested-profiles.index');
+        //return redirect()->route('suggested-profiles.index');
+        return response()->json($profile, 200, [], JSON_PRETTY_PRINT);
     }
 
     public function create()
@@ -51,13 +55,18 @@ class SuggestedProfileController extends Controller
 
     public function store(Request $request)
     {
-
+         
         SuggestedProfile::create([
-            'id' => $request->input('id'),
-            'username' => $request->input('username'),
+            //'id' => $request->input('id'),
+            //'username' => $request->input('username'),
+            'username' => $request->username,
+            'user_id'=> $request->user_id
         ]);
 
-        return redirect()->route('suggested-profiles.index');
+        $profile = SuggestedProfile::orderBy('id', 'DESC')->first();
+
+        //return redirect()->route('suggested-profiles.index');
+        return response()->json($profile, 200, [], JSON_PRETTY_PRINT);
     }
 
 }
