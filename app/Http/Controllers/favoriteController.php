@@ -16,15 +16,16 @@ class favoriteController extends Controller
      */
     public function index(User $user)
     {
-        $favorites = Favorite::where('user_id', auth()->user()->id)
-        ->with('real_estates')
-        ->get();
+        $favorites = FavoriteProfile::where('user_id', auth()->user()->id)->get();
+        //->with('real_estates')
+        //->get();
 
-        return view('profile.index',[
+       /* return view('profile.index',[
             'user' => $user,
             'favorites' => $favorites
 
-        ]);
+        ]);*/
+        return response()->json($favorites, 200, [], JSON_PRETTY_PRINT);
     }
 
     /**
@@ -47,7 +48,9 @@ class favoriteController extends Controller
     {
         auth()->user()->favoriteProfiles()->create(['realestate_id' => $id]);
 
-        return redirect()->route('realestates.index')->with('success', 'Real estate added to favorites');
+        //return redirect()->route('realestates.index')->with('success', 'Real estate added to favorites');
+        $favorites = FavoriteProfile::where('user_id', auth()->user()->id)->get();
+        return response()->json($favorites, 200, [], JSON_PRETTY_PRINT);
     }
 
     /**
@@ -94,6 +97,8 @@ class favoriteController extends Controller
     {
         auth()->user()->favoriteProfiles()->where('realestate_id', $id)->delete();
 
-        return back()->with('success', 'Real estate removed from favorites');
+        //return back()->with('success', 'Real estate removed from favorites');
+        $favorites = FavoriteProfile::where('user_id', auth()->user()->id)->get();
+        return response()->json($favorites, 200, [], JSON_PRETTY_PRINT);
     }
 }

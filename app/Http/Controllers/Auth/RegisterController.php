@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -69,5 +70,26 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+        //$latest = User::orderBy('id', 'DESC')->first();
+        //return response()->json($latest, 200, [], JSON_PRETTY_PRINT);
     }
+
+    /*public function register(Request $request){
+        $validator = Validator::make($request->all(),[
+            'name'=> ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' =>  ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(), 200, [], JSON_PRETTY_PRINT);
+        }
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
+        $token = $user->createToken('auth_token')->plainTextToken;
+        return response()->json(['user'=> $user,'token'=> $token], 200, [], JSON_PRETTY_PRINT);
+    }*/
 }

@@ -26,7 +26,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/admin/home', [App\Http\Controllers\HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
-
+/*
 //Route::get('/instagram',[App\Http\Controllers\instagramController::class, 'getInfo'])->name('business.info');
 
 Route::get('/suggested-profiles', [SuggestedProfileController::class, 'index'])->name('suggested-profiles.index');
@@ -52,3 +52,4 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/favorites/add/{realEstateId}', 'App\Http\Controllers\favoriteController@store')->name('favorites.add');
     Route::delete('/favorites/remove/{realEstateId}', 'App\Http\Controllers\favoriteController@destroy')->name('favorites.remove');
 });
+*/
