@@ -18,7 +18,7 @@ class SearchController extends Controller
 
     $data['operators'] = [
         '=' => 'jednako',
-        '<' => 'manje od',
+        '<' => 'manje od',  
         '>' => 'vece od',
         'izmedju' => 'izmedju',
     ];
