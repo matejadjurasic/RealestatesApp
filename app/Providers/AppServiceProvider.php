@@ -26,5 +26,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Paginator::useBootstrap();
+        /*Illuminate\Support\Facades\Response::macro('prettyJson', function ($data = [], $status = 200, array $headers = [], $options = 0) {
+            return Illuminate\Support\Facades\Response::json($data, $status, $headers, JSON_PRETTY_PRINT | $options);
+        });*/
     }
 }

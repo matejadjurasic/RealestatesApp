@@ -45,7 +45,8 @@ class SearchController extends Controller
     
     $data['realestates_details'] = $query->paginate(5);
 
-    return view('realestates_details.index', $data);
+    //return view('realestates_details.index', $data);
+    return response()->json($data, 200, [], JSON_PRETTY_PRINT);
 }
 
 }

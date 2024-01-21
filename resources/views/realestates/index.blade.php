@@ -38,6 +38,24 @@
                 <button type="submit" class="btn btn-danger">DELETE</button>
             </form>
         </td>
+        <td>
+            @if(auth()->check())
+                 @if(auth()->user()->favoriteProfiles->contains('realestate_id', $estate->id))
+                    <form method="POST" action="{{ route('favorites.remove', $estate->id) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Remove from Favorites</button>
+                    </form>
+                @else
+                    <form method="POST" action="{{ route('favorites.add', $estate->id) }}">
+                        @csrf
+                        <button type="submit">Add to Favorites</button>
+                    </form>
+                @endif
+            @else
+                
+            @endif
+        </td>
     </tr>
     @endforeach
 </table>

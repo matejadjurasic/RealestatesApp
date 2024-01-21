@@ -13,4 +13,10 @@ class SuggestedProfile extends Model
         return $this->belongsTo(User::class);
     }
 
+    protected $fillable = [
+        'approval',
+        'username',
+        'user_id'
+    ];
+
 }
