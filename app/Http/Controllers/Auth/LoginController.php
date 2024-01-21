@@ -72,4 +72,9 @@ class LoginController extends Controller
         return response()->json($errorMessage, 200, [], JSON_PRETTY_PRINT);
        }
     }
+
+    public function logout(Request $request){
+        auth()->user()->tokens()->delete();
+        return response()->json(['Msg' => 'Odjavljeni ste'], 200, [], JSON_PRETTY_PRINT);
+    }
 }

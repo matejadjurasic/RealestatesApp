@@ -38,7 +38,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Route::post('/register', 'App\Http\Controllers\Auth\RegisterController@register')->name('register.register');
+Route::post('/register', 'App\Http\Controllers\Auth\RegisterController@register')->name('register.register');
+Route::post('/login', 'App\Http\Controllers\Auth\LoginController@login')->name('login.login');
+Route::post('/reset', 'App\Http\Controllers\Auth\ResetPasswordController@resetPassword')->name('resetpassword.reset');
 
 
 
@@ -62,5 +64,6 @@ Route::group(['middleware'=>['auth:sanctum']], function () {
     Route::post('/suggested-profiles/{profileId}/approve', 'App\Http\Controllers\SuggestedProfileController@approveProfile')->name('suggested-profiles.approve')->middleware('is_admin');
     Route::post('/suggested-profiles/{profileId}/reject', 'App\Http\Controllers\SuggestedProfileController@rejectProfile')->name('suggested-profiles.reject')->middleware('is_admin');
     Route::post('/suggested-profiles/create/{username}/{user_id}', 'App\Http\Controllers\SuggestedProfileController@store')->name('suggested-profiles.create');
+    Route::post('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('login.logout');
 });
 
