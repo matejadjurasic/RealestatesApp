@@ -74,7 +74,7 @@ class RegisterController extends Controller
         //return response()->json($latest, 200, [], JSON_PRETTY_PRINT);
     }
 
-    /*public function register(Request $request){
+    public function register(Request $request){
         $validator = Validator::make($request->all(),[
             'name'=> ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -85,11 +85,11 @@ class RegisterController extends Controller
             return response()->json($validator->errors(), 200, [], JSON_PRETTY_PRINT);
         }
         $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
         ]);
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json(['user'=> $user,'token'=> $token], 200, [], JSON_PRETTY_PRINT);
-    }*/
+    }
 }
