@@ -22,7 +22,7 @@ class realEstateController extends Controller
      */
     public function index()
     {
-        $estates = RealEstate::latest()->paginate(5);
+        $estates = RealEstate::all();//latest()->paginate(5);
         
         //return view('realestates.index',compact('estates'))->with(request()->input('page'));
         return response()->json($estates,200,[],JSON_PRETTY_PRINT);
