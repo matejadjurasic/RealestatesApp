@@ -1,28 +1,32 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState} from 'react';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { login } from '../Api/api.js';
+import { useAuth } from '../Auth/authContext.jsx';
 import "./login.css";
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const [loading, setLoading] = useState(false); 
+    const [user, setUser] = useState(null);
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
         setErrorMessage("");
-        setLoading(true);
 
         login(email, password).then((data) => {
             if (data['token']) {
+                setUser(data['user']);
+                console.log("super");
+                navigate("/");
                 window.location.reload();
-                
             }
             else {
-                setErrorMessage(data.message);
+                console.log("bad");
+                setErrorMessage("wrong email or password");
+                window.location.reload();
             }
-            setLoading(false);
         });
 
         setEmail('');
@@ -30,36 +34,22 @@ function Login() {
     };
 
     return (
-        <div className="container">
-            <div className="content">
-                <h2 style={{ fontSize: "35px", color: "grey" }}>LOGIN</h2>
-                <form onSubmit={handleLogin}>
-                    <div className="form-element">
-                        <label htmlFor="email" style={{ marginRight: "10px" }}>Email:</label>
-                        <input
-                            style={{ height: "25px", width: "250px" }}
-                            type="text"
-                            id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </div>
-                    <div className="form-element">
-                        <label htmlFor="password" style={{ marginRight: "10px" }}>Password:</label>
-                        <input
-                            style={{ height: "25px", width: "250px", marginRight: "30px" }}
-                            type="password"
-                            id="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </div>
-                    <p style={{ color: "red", justifyContent: "center", alignItems: "center" }}>{errorMessage}</p>
-                    <button disabled={loading} className="submit" type="submit" style={{ backgroundColor: "green" }}>Login</button>
-                    
-                    
-                </form>
-            </div>
+        <div>
+            <h2>Login</h2>
+            <input
+            type="text"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value )}
+            />
+            <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value )}
+            />
+            <button onClick={handleLogin}>Login</button>
+            <p>{errorMessage}</p>
         </div>
     );
 };

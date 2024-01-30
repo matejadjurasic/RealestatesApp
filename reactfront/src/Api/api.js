@@ -10,7 +10,10 @@ export async function login(email, password) {
     });
 
     const data = await response.json();
-    if (data['token']) localStorage.setItem("token", data['access_token']);
+    if (data['token']){
+        localStorage.setItem("token", data['token']);
+        localStorage.setItem("role", data['tip']);
+    } 
     return data;
 };
 

@@ -1,21 +1,33 @@
 import React, {useState,useContext} from 'react';
 import './navbar.css'; 
 import Login from '../Login/login';
-import '../Auth/authContext';
+import {AuthContext} from '../Auth/authContext';
 import { useAuth } from '../Auth/authContext';
+//import {user} from '../Login/login';
+import Logout from '../Logout/logout';
+import { Link } from "react-router-dom";
+
 
 const Navbar = () => {
 
-    
-    const {authenticated,role,name} = useAuth();
+    const {authenticated,role} = useAuth();
 
     return (
         <nav className="navbar">
           <ul className="navList">
-            <li className="navItem"><a href="/" className="navLink">Home</a></li>
-            <li className="navItem"><a href="/about" className="navLink">About</a></li>
-            <li className="navItem"><a href="/contact" className="navLink">Name: {name}</a></li>
-            {name && <li>Welcome, {name}!</li>}
+            {authenticated ? (
+                <>
+                  <Link to="/">Home</Link>
+                  <Link to="/logout" style={{ color: "red" }}>Logout</Link>
+                </>
+              ) : (
+                <>
+                  <Link to="/">Home</Link>
+                  <Link to="/login">Login</Link>
+                  <Link to="/register">Register</Link>
+                </>
+              )
+            }
           </ul>
         </nav>
       );

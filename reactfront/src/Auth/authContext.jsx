@@ -1,33 +1,31 @@
 
 import { createContext, useContext, useState,useEffect } from 'react';
+import {login,register,logout,reset} from '../Api/api'
 
-const AuthContext = createContext({
-    authenticated: false,
-    role: null,
-    name: null,
-});
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [authenticated, setAuthenticated] = useState(false);  
-  const [role, setRole] = useState();
-  const [name, setName] = useState();
+  
+  //const [user, setUser] = useState([]);
+  const [role, setRole] = useState('');
+  const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
     checkAuthentication();
-    }, []);
+  },[]);
 
-    const checkAuthentication = () => {
-        if (localStorage.getItem("token")) {
-            setAuthenticated(true);
-            setRole(localStorage.getItem("tip"));
-            setName(localStorage.getItem("name"));
-        }
-        setAuthenticated(true);
-    };
+  const checkAuthentication = () => {
+    if(localStorage.getItem("token")){
+      setAuthenticated(true);
+      setRole(localStorage.getItem("role"));
+    }
+    setRole("no role");
+  };
+
 
 
   return (
-    <AuthContext.Provider value={{ authenticated,role,name}}>
+    <AuthContext.Provider value={{authenticated,role}}>
       {children}
     </AuthContext.Provider>
   );
