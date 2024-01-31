@@ -57,6 +57,26 @@ export async function reset(email, password_new) {
     return data;
 };
 
+export async function search(username, location_name, operator, price_start, price_end) {
+    const queryParams = new URLSearchParams({
+        q: username,
+        location_name,
+        operator,
+        price_start,
+        price_end,
+    });
+
+    const response = await fetch(`http://localhost:8000/api/realestates_details?${queryParams}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+
+    const data = await response.json();
+    return data;
+};
+
 export async function fetchRealEstates() {
     const response = await fetch('http://localhost:8000/api/realestates', {
         method: "GET",
