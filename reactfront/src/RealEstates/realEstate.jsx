@@ -1,9 +1,11 @@
 
-import React from 'react';
+import React,{useState} from 'react';
 import { useAuth } from '../Auth/authContext';
 import { deleteRealEstate, updateApiRealEstate, updateRealEstate } from '../Api/api';
 import { MdFavoriteBorder,MdFavorite } from "react-icons/md";
+import { FcLikePlaceholder,FcLike } from "react-icons/fc";
 import useFavorites from '../Favorites/favorites';
+import './realEstates.css';
 
 const RealEstate = ({ realEstate }) => {
 
@@ -19,6 +21,10 @@ const RealEstate = ({ realEstate }) => {
     followers_count,
     price,
   } = realEstate;
+
+  const [rsPrice, setRsPrice] = useState(price);
+  const [rsLocation, setRsLocation] = useState(location);
+  
 
   const [isFavorite,toggleFavorite] = useFavorites(id);
 
@@ -37,7 +43,7 @@ const RealEstate = ({ realEstate }) => {
   const renderContent = () =>{
     if (!authenticated) {
       return (<>
-        <h2>{username}'s Real Estate</h2>
+        <h2>{username}</h2>
         <img src={profile_picture_url} alt={`${username}'s profile`} style={{ maxWidth: '200px' }} />
         <p>Description: {description}</p>
         <p>Follows: {follows_count}</p>
@@ -49,23 +55,25 @@ const RealEstate = ({ realEstate }) => {
     
     if (role === "admin") {
       return (<>
-        <h2>{username}'s Real Estate</h2>
+        <h2>{username}</h2>
         <img src={profile_picture_url} alt={`${username}'s profile`} style={{ maxWidth: '200px' }} />
         <p>Description: {description}</p>
         <p>Follows: {follows_count}</p>
         <p>Followers: {followers_count}</p>
-        <p>Price: ${price}</p>
-        <p>Location: {location}</p>
+        <input type="text" defaultValue={price} onChange={(e) => setRsPrice(e.target.value )}/> 
+        <input type="text" defaultValue={location} onChange={(e) => setRsLocation(e.target.value )}/>
+        <button onClick={()=>handleUpdate(id,rsPrice,rsLocation)}>Update</button>
+        <button onClick={()=>handleUpdateApi(id)}>UpdateAPI</button>
         <button onClick={()=>handleDelete(id)}>Delete</button>
         <span onClick={toggleFavorite}>
-          {isFavorite ? <MdFavorite size={30}/> :<MdFavoriteBorder size={30}/> }
+          {isFavorite ? <FcLike size={30}/> :<FcLikePlaceholder size={30}/> }
         </span>
       </>);
     }
   
     return (
       <>
-        <h2>{username}'s Real Estate</h2>
+        <h2>{username}</h2>
         <img src={profile_picture_url} alt={`${username}'s profile`} style={{ maxWidth: '200px' }} />
         <p>Description: {description}</p>
         <p>Follows: {follows_count}</p>
@@ -73,7 +81,7 @@ const RealEstate = ({ realEstate }) => {
         <p>Price: ${price}</p>
         <p>Location: {location}</p>
         <span onClick={toggleFavorite}>
-          {isFavorite ? <MdFavorite size={30}/> :<MdFavoriteBorder size={30}/> }
+          {isFavorite ? <FcLike size={30}/> :<FcLikePlaceholder size={30}/> }
         </span>
       </>
     );

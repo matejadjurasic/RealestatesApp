@@ -1,0 +1,63 @@
+  h2 {
+    font-size: 24px;
+    color:#fff;
+    margin-bottom: 10px;
+  }
+  
+  img {
+    max-width: 200px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+  }
+  
+  p {
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #fff;
+  }
+  
+  button {
+    background-color: #4d194d;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  button:hover {
+    background-color: #3e1f47;
+  }
+  
+  span {
+    cursor: pointer;
+    margin-top: 10px;
+    display: inline-block;
+  }
+
+   body {
+    max-width: 100%;
+    overflow-x: hidden;
+    background-color:#272640;
+    color: #fff;
+   }
+  
+  .real-estate-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust the minmax values as needed */
+    gap: 20px; /* Adjust the gap between items */
+    padding-bottom: 2.5rem;
+  }
+  
+  .real-estate-item {
+    border: 1px solid #212f45; /* Add borders or box-shadow for each item */
+    border-radius: 8px; /* Add some border radius for rounded corners */
+    overflow: hidden; /* Ensure contents don't overflow */
+    transition: box-shadow 0.3s ease;
+    background-color: #144552;
+    text-align: center;
+  }
+
+  .real-estate-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { fetchRealEstates } from '../Api/api';
+import { fetchRealEstates,search } from '../Api/api';
+import SearchResult from './SearchResult';
+import {  BrowserRouter as Router, Route, Link, useNavigate} from 'react-router-dom';
 
 const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -9,28 +11,31 @@ const SearchBar = ({ onSearch }) => {
   const [priceStart, setPriceStart] = useState('');
   const [priceEnd, setPriceEnd] = useState('');
   const [operators, setOperators] = useState(['=', '<', '>', 'izmedju']);
+  const [searchResult, setSearchResult] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchRealEstates().then((data) => {
-      const estateData = (data && data.estate) ? data.estate : [];
-      const allLocations = estateData.map((estate) => estate.location);
-      const uniqueLocations = [...new Set(allLocations)];
-      setLocations(uniqueLocations);
+    search('','','','','').then((data) => {
+      //const estateData = (data && data.estate) ? data.estate : [];
+      const allLocations = data['locations'];
+      setLocations(allLocations);
     });
   }, []);
 
+
+
   const handleSearch = async () => {
     try {
-      const searchParams = {
+      const searchParams = new URLSearchParams( {
         q: searchTerm,
         location_name: selectedLocation,
         operator: selectedOperator,
         price_start: priceStart,
         price_end: priceEnd,
-      };
+      }).toString();
 
-      const searchResults = await fetchRealEstates(searchParams);
-      onSearch(searchResults);
+      window.location.href = `/search?${searchParams}`;
+      //onSearch(searchResults);
     } catch (error) {
       console.error('Error during search:', error);
     }
