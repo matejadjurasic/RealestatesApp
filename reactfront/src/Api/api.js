@@ -57,13 +57,14 @@ export async function reset(email, password_new) {
     return data;
 };
 
-export async function search(username, location_name, operator, price_start, price_end) {
+export async function search(username, location_name, operator, price_start, price_end,page) {
     const queryParams = new URLSearchParams({
         q: username,
         location_name,
         operator,
         price_start,
         price_end,
+        page,
     });
 
     const response = await fetch(`http://localhost:8000/api/realestates_details?${queryParams}`, {
@@ -77,8 +78,11 @@ export async function search(username, location_name, operator, price_start, pri
     return data;
 };
 
-export async function fetchRealEstates() {
-    const response = await fetch('http://localhost:8000/api/realestates', {
+export async function fetchRealEstates(page) {
+    const queryParams = new URLSearchParams({
+        page,
+    });
+    const response = await fetch(`http://localhost:8000/api/realestates?${queryParams}`, {
         method: "GET",
         headers: {
         },

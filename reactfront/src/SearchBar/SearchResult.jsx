@@ -6,6 +6,8 @@ import { search } from '../Api/api';
 const SearchResult = () => {
 
   const[searchResult,setSearchResult]=useState([]);
+  const[currentPage,setCurrentPage]=useState(1);
+  const[totalPages,setTotalPages]=useState(1);
   
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -17,12 +19,27 @@ const SearchResult = () => {
   const priceEnd = queryParams.get('price_end');
 
   useEffect(() => {
-    search(searchTerm, selectedLocation, selectedOperator, priceStart, priceEnd).then((data) => {
-      setSearchResult(data['realestates_details']);
+    search(searchTerm, selectedLocation, selectedOperator, priceStart, priceEnd,currentPage).then((data) => {
+      setSearchResult(data['realestates_details']['data']);
+      setTotalPages(data['realestates_details']['last_page']);
     });
-  }, [searchTerm, selectedLocation, selectedOperator, priceStart, priceEnd]);
+  }, [searchTerm, selectedLocation, selectedOperator, priceStart, priceEnd,currentPage]);
 
-  
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePageClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <div>
@@ -33,6 +50,13 @@ const SearchResult = () => {
         <RealEstate key={estate.id} realEstate={estate} />
         </div>
       ))}
+      </div>
+      <div className="pagination">
+        <button onClick={handlePreviousPage} disabled={currentPage === 1}>Previous</button>
+        {Array.from({ length: totalPages }, (_, index) => index + 1).map(pageNumber => (
+          <button key={pageNumber} onClick={() => handlePageClick(pageNumber)}>{pageNumber}</button>
+        ))}
+        <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
       </div>
     </div>
   );
