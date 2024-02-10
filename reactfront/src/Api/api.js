@@ -153,8 +153,23 @@ export async function updateApiRealEstate(id) {
     return data;
 };
 
-export async function fetchFavorites() {
-    const response = await fetch('http://localhost:8000/api/favorites', {
+export async function fetchFavorites(page) {
+    const queryParams = new URLSearchParams({
+        page,
+    });
+    const response = await fetch(`http://localhost:8000/api/favorites?${queryParams}`, {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${token}`
+        },
+    });
+
+    const data = await response.json();
+    return data;
+};
+
+export async function fetchAllFavorites() {
+    const response = await fetch('http://localhost:8000/api/favorites/all', {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${token}`

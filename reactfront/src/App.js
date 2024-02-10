@@ -13,6 +13,7 @@ import Footer from './Footer/footer';
 import SearchBar from './SearchBar/searchbar';
 import SearchTable from './SearchBar/SearchResult';
 import SearchResult from './SearchBar/SearchResult';
+import FavoritesPage  from './Favorites/favoritesPage';
 
 function App() {
   const { authenticated, role } = useAuth();
@@ -43,6 +44,7 @@ function App() {
           {authenticated && (
             <>
               <Route path="/" element={[<Navbar />, <RealEstates />,<Footer />]} />
+              <Route path="/favorites" element={[<Navbar />,<FavoritesPage/>,<Footer />]} />
               <Route path="/logout" element={<Logout />} />
             </>
           )}

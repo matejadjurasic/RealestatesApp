@@ -25,8 +25,10 @@ const RealEstate = ({ realEstate }) => {
   const [rsPrice, setRsPrice] = useState(price);
   const [rsLocation, setRsLocation] = useState(location);
   
-
+  
   const [isFavorite,toggleFavorite] = useFavorites(id);
+  
+  
 
   const handleDelete = (id) =>{
     deleteRealEstate(id).then(()=> window.location.reload());

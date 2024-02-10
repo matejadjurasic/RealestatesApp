@@ -53,6 +53,7 @@ Route::get('/realestates/{id}','App\Http\Controllers\realEstateController@show')
 
 Route::group(['middleware'=>['auth:sanctum']], function () {
     Route::get('/favorites', 'App\Http\Controllers\favoriteController@index')->name('favorites.all');
+    Route::get('/favorites/all', 'App\Http\Controllers\favoriteController@getAll')->name('favorites.getAll');
     Route::post('/favorites/add/{realEstateId}', 'App\Http\Controllers\favoriteController@store')->name('favorites.add');
     Route::delete('/favorites/remove/{realEstateId}', 'App\Http\Controllers\favoriteController@destroy')->name('favorites.remove');
     Route::post('/realestates/{name}','App\Http\Controllers\realEstateController@store')->name('realestates.addestate')->middleware('is_admin');

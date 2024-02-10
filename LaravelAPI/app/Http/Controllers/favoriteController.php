@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\FavoriteProfile;
+use App\Models\RealEstate;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class favoriteController extends Controller
 {
@@ -17,15 +19,38 @@ class favoriteController extends Controller
     public function index(User $user)
     {
         $favorites = FavoriteProfile::where('user_id', auth()->user()->id)->get();
+        //$favorites = FavoriteProfile::where('user_id', auth()->user()->id)->paginate(2);
         //->with('real_estates')
         //->get();
+        $realEstatesData = [];
 
-       /* return view('profile.index',[
-            'user' => $user,
-            'favorites' => $favorites
+        foreach ($favorites as $favorite) {
+            $realEstate = RealEstate::find($favorite->realestate_id);
+            if ($realEstate) {
+                $realEstatesData[] = $realEstate;
+            }
+        }
+       
+        $perPage = 2; // Number of items per page
+        $currentPage = request()->input('page', 1); // Get the current page from the request
+        $pagedData = array_slice($realEstatesData, ($currentPage - 1) * $perPage, $perPage);
 
-        ]);*/
-        return response()->json($favorites, 200, [], JSON_PRETTY_PRINT);
+        // Create a paginator instance
+        $paginator = new \Illuminate\Pagination\LengthAwarePaginator(
+            $pagedData, count($realEstatesData), $perPage, $currentPage
+        );
+
+        // Return the response with the paginated real estate data
+        return response()->json($paginator, 200, [], JSON_PRETTY_PRINT);
+
+        //return response()->json($favorites, 200, [], JSON_PRETTY_PRINT);
+    }
+
+    public function getAll(User $user)
+    {
+        $favorites = FavoriteProfile::where('user_id', auth()->user()->id)->get();
+
+        return response()->json($favorites, 200, [], JSON_PRETTY_PRINT);  
     }
 
     /**

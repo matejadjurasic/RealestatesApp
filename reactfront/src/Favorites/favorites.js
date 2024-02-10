@@ -1,24 +1,34 @@
 import React from 'react'
 import { useState,useEffect } from 'react'
-import { addFavorite,removeFavorite,fetchFavorites } from '../Api/api';
+import { addFavorite,removeFavorite,fetchFavorites,fetchAllFavorites } from '../Api/api';
+import { useLocation } from 'react-router-dom';
+import { useAuth } from '../Auth/authContext';
 
 export const useFavorites = (realEstateId) => {
 
   const [favorites, setFavorites] = useState([]);
+  const{authenticated} =useAuth();
+ 
 
   useEffect(()=>{
-
+    
+     
+    
     const fetchFavoritesData = async () => {
       try {
-        const favoritesData = await fetchFavorites();
-        setFavorites(favoritesData);
+        // Fetch favorites only if user is authenticated
+        if (authenticated) {
+          const data = await fetchAllFavorites();
+          setFavorites(data);
+        }
       } catch (error) {
-        console.log("error getting favorites data");
+        console.error('Error fetching favorites:', error);
+        setFavorites([]);
       }
-    }
-
-    fetchFavoritesData();
-  },[]);
+    };
+  
+    fetchFavoritesData();  
+  },[authenticated]);
 
   const isFavorite = favorites.some((favorite)=> favorite.realestate_id === realEstateId);
 
