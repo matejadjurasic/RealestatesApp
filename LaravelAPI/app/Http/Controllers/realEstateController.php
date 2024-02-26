@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Support\Jsonable;
 
 define('ENDPOINT_BASE', 'https://graph.facebook.com/v18.0/');
-define('ACCESS_TOKEN', 'EAAQSaZAhOZCsYBO38CPLyJoEAJlEE5ZADZC8QPahn9TJRL48KZCrS2jvdZAFNe1RwGt8HukemIJD2dm9mPQiUfgTnpn7DlF2rG0eqbR3RQXOZBLuYvCepvpglRzByGI2ZBB5K60Q7MgQG3SdYzczueW4vZBMWXKSZB4K0XruRpiv0FC34uGG327fQ9J45ZBZAE2dJtw7');
+define('ACCESS_TOKEN', 'EAAQSaZAhOZCsYBOZBUbb0FRdXAOvO9EK7u0fpJMiziphwIEl8luNCimm3YBvzkEq9UlDAXr9SyaHAx3y1ANPBmorbeQ4fg2mzFzwQsdXBT4rHGudfbtZA6jcUrSdE1kcJC6rffy5EOehhZA1ZCMdSse7jqwo5abiZBW6IfzeknrZBZBomgLN4fmQdu7t4Fp7u9wRa');
 define('PAGE_ID', '163196900218213');
 define('INSTAGRAM_ID', '17841460419692620');
 
@@ -176,18 +176,31 @@ class realEstateController extends Controller
             curl_close($ch);
             $responseArray = json_decode($response,true);
 
-            $estate->update(['profile_picture_url' => $responseArray['business_discovery']['profile_picture_url']],
-            ['description' => $responseArray['business_discovery']['biography']],
-            ['follows_count' => $responseArray['business_discovery']['follows_count']],
-            ['followers_count' => $responseArray['business_discovery']['followers_count']]);
+            $updateDetails = [
+                'profile_picture_url' => $responseArray['business_discovery']['profile_picture_url'],
+                'description' => $responseArray['business_discovery']['biography'],
+                'follows_count' => $responseArray['business_discovery']['follows_count'],
+                'followers_count' => $responseArray['business_discovery']['followers_count']
+            ];
+            
+            DB::table('real_estates')->where('id', $request->id)->update($updateDetails);
 
+            /*$estate->update([
+            'profile_picture_url' => $responseArray['business_discovery']['profile_picture_url'],
+            'description' => $responseArray['business_discovery']['biography'],
+            'follows_count' => $responseArray['business_discovery']['follows_count'],
+            'followers_count' => $responseArray['business_discovery']['followers_count']
+            ]);
+            $estate->save();*/
         } catch(\Exception $e){
             //return redirect()->route('realestates.index')->with('failure',$e->getMessage());
             return response()->json($e->getMessage(), 200, [], JSON_PRETTY_PRINT);
+            
         }
         //return view('instagram-profile',['responseArray'=>$responseArray]);
         //return redirect()->route('realestates.index')->with('success','RealEstate updated successfully');
         return response()->json($estate, 200, [], JSON_PRETTY_PRINT);
+        //return response()->json($responseArray, 200, [], JSON_PRETTY_PRINT);
     }
 
     /**
