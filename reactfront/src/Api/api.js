@@ -13,6 +13,7 @@ export async function login(email, password) {
     if (data['token']){
         localStorage.setItem("token", data['token']);
         localStorage.setItem("role", data['tip']);
+        localStorage.setItem("user_id", data['user']['id']);
     } 
     return data;
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchProfiles, approveProfile, rejectProfile } from '../Api/api';
+import { fetchProfiles, approveProfile, rejectProfile, addProfile } from '../Api/api';
 import { useAuth } from '../Auth/authContext';
 
 const SuggestProfile = () => {
@@ -7,7 +7,7 @@ const SuggestProfile = () => {
     const [successMessage, setSuccessMessage] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [profiles, setProfiles] = useState([]);
-    const { token, role } = useAuth(); 
+    const { token, role, userId } = useAuth(); 
 
     const handleUsernameChange = (event) => {
         setUsername(event.target.value);
@@ -17,7 +17,7 @@ const SuggestProfile = () => {
         event.preventDefault();
         try {
             console.log('Username:', username);
-           // await addProfile(username, token); 
+            await addProfile(username, userId); 
             setSuccessMessage('Successfully forwarded to admin.');
             setShowModal(true);
             setUsername('');
@@ -37,26 +37,27 @@ const SuggestProfile = () => {
         };
 
         fetchAllProfiles();
-    }, [token]); 
+    }, [token, userId]);
 
     const handleReject = async (id) => {
-      try {
-          await rejectProfile(id);
-          setProfiles(profiles.filter(profile => profile.id !== id)); 
-          console.log('Profile rejected successfully.');
-      } catch (error) {
-          console.error('Error rejecting profile:', error);
-      }
-  };
+        try {
+            await rejectProfile(id);
+            setProfiles(profiles.filter(profile => profile.id !== id)); 
+            console.log('Profile rejected successfully.');
+        } catch (error) {
+            console.error('Error rejecting profile:', error);
+        }
+    };
 
-  const handleApprove = async (id) => {
-    try {
-        await approveProfile(id); 
-        console.log('Profile approved successfully.');
-    } catch (error) {
-        console.error('Error approving profile:', error);
-    }
-};
+    const handleApprove = async (id) => {
+        try {
+            await approveProfile(id); 
+            setProfiles(prevProfiles => prevProfiles.filter(profile => profile.id !== id));
+            console.log('Profile approved successfully.');
+        } catch (error) {
+            console.error('Error approving profile:', error);
+        }
+    };
 
     return (
         <div>
@@ -67,18 +68,18 @@ const SuggestProfile = () => {
                         <div>
                             <h3>All suggested profiles:</h3>
                             <ul>
-                                {profiles.map(profile => (
-                                    <li key={profile.id}>
-                                        {profile.username}
-                                        <button onClick={() => handleApprove(profile.id)}>Approve</button> 
-                                        <button onClick={() => handleReject(profile.id)}>Reject</button>
-                                    </li>
-                                ))}
+                                {profiles
+                                    .filter(profile => profile.approval === 0) 
+                                    .map(profile => (
+                                        <li key={profile.id}>
+                                            {profile.username}
+                                            <button onClick={() => handleApprove(profile.id)}>Approve</button> 
+                                            <button onClick={() => handleReject(profile.id)}>Reject</button>
+                                        </li>
+                                    ))}
                             </ul>
                         </div>
                     )}
-
-              
                 </div>
             ) : (
                 <div>

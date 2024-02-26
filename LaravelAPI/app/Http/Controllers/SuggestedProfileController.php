@@ -39,14 +39,14 @@ class SuggestedProfileController extends Controller
     public function rejectProfile($profileId)
     {
         $profile = SuggestedProfile::find($profileId);
-
+    
         if ($profile) {
-            $profile->update(['approval' => false]);
+            $profile->delete();
         }
-
-        //return redirect()->route('suggested-profiles.index');
-        return response()->json($profile, 200, [], JSON_PRETTY_PRINT);
+    
+        return response()->json(['message' => 'Profile deleted successfully'], 200);
     }
+    
 
     public function create()
     {
