@@ -19,6 +19,7 @@ const Navbar = () => {
                 <>
                   <Link to="/">Home</Link>
                   <Link to="/favorites">Favorites</Link>
+                  <Link to="/suggest-profile">Suggest Profile</Link>
                   <Link to="/logout" style={{ color: "red" }}>Logout</Link>
                 </>
               ) : (

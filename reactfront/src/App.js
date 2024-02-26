@@ -11,9 +11,9 @@ import Logout from './Logout/logout';
 import Register from './Register/register';
 import Footer from './Footer/footer';
 import SearchBar from './SearchBar/searchbar';
-import SearchTable from './SearchBar/SearchResult';
 import SearchResult from './SearchBar/SearchResult';
 import FavoritesPage  from './Favorites/favoritesPage';
+import SuggestProfile from './Suggested/SuggestProfile';
 
 function App() {
   const { authenticated, role } = useAuth();
@@ -41,11 +41,13 @@ function App() {
             element={!authenticated ? [<Navbar />, <Register />,<Footer />] : <Navigate to="/" />}
           />
 
+
           {authenticated && (
             <>
               <Route path="/" element={[<Navbar />, <RealEstates />,<Footer />]} />
               <Route path="/favorites" element={[<Navbar />,<FavoritesPage/>,<Footer />]} />
               <Route path="/logout" element={<Logout />} />
+              <Route path="/suggest-profile" element={[<Navbar />, <SuggestProfile />, <Footer />]} />
             </>
           )}
         </Routes>
