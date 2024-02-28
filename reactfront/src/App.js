@@ -14,6 +14,7 @@ import SearchBar from './SearchBar/searchbar';
 import SearchResult from './SearchBar/SearchResult';
 import FavoritesPage  from './Favorites/favoritesPage';
 import SuggestProfile from './Suggested/SuggestProfile';
+import ShowEstate from './RealEstates/showEstate';
 
 function App() {
   const { authenticated, role } = useAuth();
@@ -39,6 +40,10 @@ function App() {
           <Route
             path="/register"
             element={!authenticated ? [<Navbar />, <Register />,<Footer />] : <Navigate to="/" />}
+          />
+          <Route
+            path="/estate"
+            element={[<Navbar />, <SearchBar />, <ShowEstate />, <Footer />]}
           />
 
 

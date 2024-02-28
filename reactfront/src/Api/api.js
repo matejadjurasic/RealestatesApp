@@ -264,3 +264,12 @@ export async function addProfile(username,user_id) {
     const data = await response.json();
     return data;
 };
+
+export async function getCoordinates(city) {
+    const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=752667ff0ad1f03d7abff59e2f700d4b`, {
+        method: "GET",
+    });
+
+    const data = await response.json();
+    return data;
+};

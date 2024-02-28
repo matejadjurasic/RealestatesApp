@@ -28,7 +28,9 @@ const RealEstate = ({ realEstate }) => {
   
   const [isFavorite,toggleFavorite] = useFavorites(id);
   
-  
+  const searchParams = new URLSearchParams( {
+    id: id
+  }).toString();
 
   const handleDelete = (id) =>{
     deleteRealEstate(id).then(()=> window.location.reload());
@@ -42,11 +44,15 @@ const RealEstate = ({ realEstate }) => {
     updateApiRealEstate(id).then(()=> window.location.reload());
   }
 
+  const handleClick = () =>{
+    window.location.href = `/estate?${searchParams}`
+  }
+
   const renderContent = () =>{
     if (!authenticated) {
       return (<>
         <h2>{username}</h2>
-        <img src={profile_picture_url} alt={`${username}'s profile`} style={{ maxWidth: '200px' }} />
+        <img src={profile_picture_url} alt={`${username}'s profile`} style={{ maxWidth: '200px' }} onClick={handleClick}/>
         <p>Description: {description}</p>
         <p>Follows: {follows_count}</p>
         <p>Followers: {followers_count}</p>
@@ -58,7 +64,7 @@ const RealEstate = ({ realEstate }) => {
     if (role === "admin") {
       return (<>
         <h2>{username}</h2>
-        <img src={profile_picture_url} alt={`${username}'s profile`} style={{ maxWidth: '200px' }} />
+        <img src={profile_picture_url} alt={`${username}'s profile`} style={{ maxWidth: '200px' }} onClick={handleClick}/>
         <p>Description: {description}</p>
         <p>Follows: {follows_count}</p>
         <p>Followers: {followers_count}</p>
@@ -76,7 +82,7 @@ const RealEstate = ({ realEstate }) => {
     return (
       <>
         <h2>{username}</h2>
-        <img src={profile_picture_url} alt={`${username}'s profile`} style={{ maxWidth: '200px' }} />
+        <img src={profile_picture_url} alt={`${username}'s profile`} style={{ maxWidth: '200px' }} onClick={handleClick}/>
         <p>Description: {description}</p>
         <p>Follows: {follows_count}</p>
         <p>Followers: {followers_count}</p>
