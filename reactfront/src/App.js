@@ -15,6 +15,7 @@ import SearchResult from './SearchBar/SearchResult';
 import FavoritesPage  from './Favorites/favoritesPage';
 import SuggestProfile from './Suggested/SuggestProfile';
 import ShowEstate from './RealEstates/showEstate';
+import AddRealEstate from './AddRealEstate/AddRealEstate';
 
 function App() {
   const { authenticated, role } = useAuth();
@@ -53,6 +54,7 @@ function App() {
               <Route path="/favorites" element={[<Navbar />,<FavoritesPage/>,<Footer />]} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/suggest-profile" element={[<Navbar />, <SuggestProfile />, <Footer />]} />
+              <Route path="/addrealestate" element={[<Navbar />, <AddRealEstate />, <Footer />]} />
             </>
           )}
         </Routes>
