@@ -1,10 +1,11 @@
 import React,{useState,useEffect} from 'react'
 import { useLocation } from 'react-router-dom';
 import { showRealEstate } from '../Api/api';
-import { MapContainer,TileLayer } from 'react-leaflet';
+import { MapContainer,TileLayer,Marker,Popup } from 'react-leaflet';
 import { getCoordinates } from '../Api/api';
 import 'leaflet/dist/leaflet.css'
 import './realEstates.css'
+import { Icon } from 'leaflet';
 
 export const ShowEstate = () => {
 
@@ -15,6 +16,11 @@ export const ShowEstate = () => {
     const queryParams = new URLSearchParams(location.search);
 
     const id = queryParams.get('id');
+
+    const icon = new Icon({
+        iconUrl: require("../img/map-marker.png"),
+        iconSize: [38,38]
+    });
 
     useEffect(()=>{
         const fetchRealEstate = async () => {
@@ -70,6 +76,9 @@ export const ShowEstate = () => {
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
+                        <Marker position={[lat,lon]} icon={icon}>
+                            <Popup>{estate.username}</Popup>
+                        </Marker>
                     </MapContainer>
                 )}
             </div>

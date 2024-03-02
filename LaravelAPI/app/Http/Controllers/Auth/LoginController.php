@@ -48,7 +48,8 @@ class LoginController extends Controller
             'email'=>'required|email',
             'password'=>'required'
        ]);
-       $user= User::where('email',$request['email'])->firstOrFail();
+       $email = $request->input('email');
+       $user= User::where('email',$email)->firstOrFail();
        $token = $user->createToken('auth_token')->plainTextToken;
        if (auth()->attempt(array('email'=>$input['email'],'password'=>$input['password'])))
        {

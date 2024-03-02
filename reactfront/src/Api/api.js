@@ -44,6 +44,18 @@ export async function logout() {
     return data;
 };
 
+export async function getUser() {
+    const response = await fetch(`http://localhost:8000/api/user`, {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${token}`
+        },
+    });
+
+    const data = await response.json();
+    return data;
+};
+
 export async function reset(email, password_new) {
     const response = await fetch(`http://localhost:8000/api/reset`, {
         method: "POST",

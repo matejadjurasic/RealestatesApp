@@ -80,11 +80,21 @@ class realEstateController extends Controller
             curl_close($ch);
             $responseArray = json_decode($response,true);
 
-            DB::insert('insert into real_estates (username,profile_picture_url,description,location,follows_count,followers_count,price)
-            values (?,?,?,?,?,?,?)',[$responseArray['business_discovery']['username'],
-            $responseArray['business_discovery']['profile_picture_url'],$responseArray['business_discovery']['biography'],$location,
-            $responseArray['business_discovery']['follows_count'],$responseArray['business_discovery']['followers_count'],
-            $price]);
+            // DB::insert('insert into real_estates (username,profile_picture_url,description,location,follows_count,followers_count,price)
+            // values (?,?,?,?,?,?,?)',[$responseArray['business_discovery']['username'],
+            // $responseArray['business_discovery']['profile_picture_url'],$responseArray['business_discovery']['biography'],$location,
+            // $responseArray['business_discovery']['follows_count'],$responseArray['business_discovery']['followers_count'],
+            // $price]);
+
+            DB::table('real_estates')->insert([
+                'username' => $responseArray['business_discovery']['username'],
+                'profile_picture_url' => $responseArray['business_discovery']['profile_picture_url'],
+                'description' => $responseArray['business_discovery']['biography'],
+                'location' => $location,
+                'follows_count' => $responseArray['business_discovery']['follows_count'],
+                'followers_count' => $responseArray['business_discovery']['followers_count'],
+                'price' => $price
+            ]);
         } catch(\Exception $e){
             //return redirect()->route('realestates.create')->with('failure','Invalid Parametars');
             return response()->json($e->getMessage(), 200, [], JSON_PRETTY_PRINT);
@@ -151,6 +161,8 @@ class realEstateController extends Controller
     {
         $estate = RealEstate::find($request->id);
 
+        $id = intval($request->id);
+
         $name = $estate->username;
        
         $endpoint = ENDPOINT_BASE . INSTAGRAM_ID;
@@ -183,7 +195,7 @@ class realEstateController extends Controller
                 'followers_count' => $responseArray['business_discovery']['followers_count']
             ];
             
-            DB::table('real_estates')->where('id', $request->id)->update($updateDetails);
+            DB::table('real_estates')->where('id', $id)->update($updateDetails);
 
             /*$estate->update([
             'profile_picture_url' => $responseArray['business_discovery']['profile_picture_url'],
@@ -213,7 +225,8 @@ class realEstateController extends Controller
     {
         $estate = RealEstate::find($id);
 
-        DB::delete('delete from real_estates where id = ?',[$id]);
+        //DB::delete('delete from real_estates where id = ?',[$id]);
+        DB::table('real_estates')->where('id', $id)->delete();
 
         //return redirect()->route('realestates.index');
         return response()->json($estate, 200, [], JSON_PRETTY_PRINT);
