@@ -12,8 +12,25 @@ const Navbar = () => {
 
     const {authenticated,role} = useAuth();
 
+    const menu = document.querySelector('.navbar_togglemenu');
+    const menuLinks = document.querySelector('.navList');
+
+    const handleClick = () =>{
+      menu.classList.toggle('is-active');
+      menuLinks.classList.toggle('active');
+    }
+     
     return (
         <nav className="navbar">
+          <div className='logo'>
+            <img src={require('../img/logo.png')} className='logoimage' />
+          </div>
+          
+          <div className="navbar_togglemenu" onClick={handleClick} >
+            <span className="bar"></span>
+            <span className="bar"></span>
+            <span className="bar"></span>
+          </div>
           <ul className="navList">
             {authenticated ? (
                 <>

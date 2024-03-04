@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { fetchRealEstates,search } from '../Api/api';
 import SearchResult from './SearchResult';
 import {  BrowserRouter as Router, Route, Link, useNavigate} from 'react-router-dom';
+import './searchbar.css';
 
 const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -42,7 +43,7 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <div>
+    <div className='search-container'>
       <input
         type="text"
         placeholder="Search by username..."
