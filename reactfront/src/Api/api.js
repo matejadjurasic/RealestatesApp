@@ -1,22 +1,56 @@
-const token = localStorage.getItem("token");
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
-export async function login(email, password) {
+axios.defaults.withCredentials = true;
+
+//const token2 = localStorage.getItem("token");
+const token = Cookies.get('token');
+
+
+export async function login2(email, password) {
     const response = await fetch(`http://localhost:8000/api/login`, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
         body: JSON.stringify({email, password})
     });
 
     const data = await response.json();
     if (data['token']){
+
         localStorage.setItem("token", data['token']);
         localStorage.setItem("role", data['tip']);
         localStorage.setItem("user_id", data['user']['id']);
     } 
     return data;
 };
+
+export async function login(email, password) {
+    try {
+        const response = await axios.post('http://localhost:8000/api/login', {
+            email,
+            password
+        },
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const data = response.data;
+        if (data.token) {
+            //localStorage.setItem("token", data['token']);
+            Cookies.set('token', data.token, { expires: 7, secure: true });
+            localStorage.setItem("role", data.tip);
+            localStorage.setItem("user_id", data.user.id);
+        }
+        return data;
+    } catch (error) {
+        console.error('Error logging in:', error);
+        throw error;
+    }
+}
 
 export async function register(name, email, password, password_confirmation) {
     const response = await fetch('http://localhost:8000/api/register', {
@@ -41,6 +75,7 @@ export async function logout() {
 
     const data = await response.json();
     localStorage.removeItem("token");
+    Cookies.remove('token');
     return data;
 };
 

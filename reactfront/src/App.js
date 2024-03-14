@@ -40,6 +40,10 @@ function App() {
             element={!authenticated ? [<Navbar />, <Login />,<Footer />] : <Navigate to="/" />}
           />
           <Route
+            path="/login2"
+            element={[<Navbar />, <Login />,<Footer />]}
+          />
+          <Route
             path="/register"
             element={!authenticated ? [<Navbar />, <Register />,<Footer />] : <Navigate to="/" />}
           />

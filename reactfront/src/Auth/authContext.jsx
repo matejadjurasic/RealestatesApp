@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 const AuthContext = createContext();
 
@@ -13,7 +14,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const checkAuthentication = () => {
-        if (localStorage.getItem("token")) {
+        if (Cookies.get('token') != null) {
             setAuthenticated(true);
             setRole(localStorage.getItem("role"));
             setUserId(localStorage.getItem("user_id")); 

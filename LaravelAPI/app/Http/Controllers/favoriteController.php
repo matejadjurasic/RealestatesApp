@@ -121,7 +121,7 @@ class favoriteController extends Controller
     public function destroy($id)
     {
         auth()->user()->favoriteProfiles()->where('realestate_id', $id)->delete();
-
+        auth()->user()->decrement('favorite');
         //return back()->with('success', 'Real estate removed from favorites');
         $favorites = FavoriteProfile::where('user_id', auth()->user()->id)->get();
         return response()->json($favorites, 200, [], JSON_PRETTY_PRINT);

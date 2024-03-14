@@ -34,8 +34,9 @@ function Login() {
     };
 
     return (
-        <div className='login'>
+        <div className='login-container'>
             <h2>Login</h2>
+            <div className='login-form'>
             <input
             type="text"
             placeholder="Email"
@@ -50,6 +51,7 @@ function Login() {
             />
             <button onClick={handleLogin}>Login</button>
             <p>{errorMessage}</p>
+            </div>
         </div>
     );
 };
