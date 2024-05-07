@@ -1,4 +1,5 @@
 import React from 'react';
+import { VscFoldUp } from "react-icons/vsc";
 import './footer.css';
 
 const Footer = () => {
@@ -7,12 +8,8 @@ const Footer = () => {
         <p></p>
         <div>
           <a href="#" className="footerLink">
-            Link 1
+          <VscFoldUp />
           </a>
-          <a href="#" className="footerLink">
-            Link 2
-          </a>
-          {/* Add more links as needed */}
         </div>
       </footer>
     );

@@ -1,6 +1,6 @@
   .footer {
     background-color: #1b1a2c;
-    color: #fff;
+    color: #d9abe2;
     padding: 1rem;
     text-align: center;
     position: relative;
@@ -9,7 +9,7 @@
   }
   
   .footerLink {
-    color: #fff;
+    color: #d9abe2;
     text-decoration: none;
     margin: 0 0.5rem;
   }

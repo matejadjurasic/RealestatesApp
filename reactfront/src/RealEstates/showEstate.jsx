@@ -69,7 +69,7 @@ export const ShowEstate = () => {
                 <p>Location: {estate['location']}</p>
             </div>
             <div>
-                <button onClick={fetchCoordinates}>Dugme</button>
+                <button onClick={fetchCoordinates}>Show map</button>
                 {lat !== null && lon !== null && (
                     <MapContainer center={[lat, lon]} zoom={13} style={{ height: '400px', width: '100%' }}>
                         <TileLayer

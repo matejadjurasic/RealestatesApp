@@ -39,7 +39,7 @@ const Navbar = () => {
                   <Link to="/suggest-profile">Suggest Profile</Link>
                   {role === 'admin' && <Link to="/addrealestate">Add</Link>}
                   <Link to="/myprofile">My profile</Link>
-                  <Link to="/logout" style={{ color: "red" }}>Logout</Link>
+                  <Link to="/logout" style={{ color: "yellow" }}>Logout</Link>
                 </>
               ) : (
                 <>

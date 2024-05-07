@@ -1,51 +1,59 @@
-
-/* Style for the container */
 .search-container {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-end;
+  
   justify-content: center;
   gap: 10px;
+  margin-top: 40px; 
+  margin-bottom: 30px; 
 }
 
-/* Style for the input fields */
-.search-container input[type="text"] {
-  flex: 1;
-  width: 200px;
-  height: 40px;
-  padding: 0 15px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  background-color: #f7f7f7;
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-/* Style for the select elements */
+.search-container input[type="text"],
 .search-container select {
   flex: 1;
-  width: 200px;
-  height: 40px;
-  padding: 0 15px;
+  width: 150px; 
+  height: 32px; 
+  padding: 0 10px; 
   border: 1px solid #ccc;
-  border-radius: 20px;
-  background-color: #f7f7f7;
+  border-radius: 16px; 
+  background-color: #d9abe2;
   transition: border-color 0.3s, box-shadow 0.3s;
+  font-size: 14px; 
+  color: #4d0b53;
+  align-self: flex-end;
+}
+.search-container input[type="text"]::placeholder,
+.search-container select::placeholder {
+  color: #4d0b53; 
 }
 
-/* Style for the button */
+
+.search-container input[type="text"]:focus,
+.search-container select:focus {
+  outline: none;
+  border-color: #6f1391;
+  box-shadow: 0 0 5px rgba(87, 20, 116, 0.5);
+}
+
+.search-container select {
+  appearance: none; 
+}
+
 .search-container button {
   flex: 0 0 auto;
-  background-color: #007bff;
-  color: white;
+  width: 150px; 
+  height: 34px; 
+  background-color: #ae1a96;
+  color: #f1aef7;
   border: none;
-  border-radius: 20px;
+  border-radius: 18px; 
   padding: 0.5rem 1rem;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-weight: bold;
 }
 
-/* Hover effect for the button */
 .search-container button:hover {
-  background-color: #0056b3;
+  background-color: #610d69;
 }
-

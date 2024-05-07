@@ -1,7 +1,7 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { register } from '../Api/api';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
+import './register.css'; 
 
 export const Register = () => {
 
@@ -34,7 +34,7 @@ export const Register = () => {
 
 
   return (
-    <div>
+    <div className="register-container"> 
             <h2>Register</h2>
             <input
             type="text"
@@ -60,8 +60,8 @@ export const Register = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value )}
             />
-            <button onClick={handleRegister}>Register</button>
-            <p>{errorMessage}</p>
+            <button className="register-button" onClick={handleRegister}>Register</button> 
+            <p className="error-message">{errorMessage}</p> 
     </div>
   )
 }

@@ -11,7 +11,7 @@ const SearchBar = ({ onSearch }) => {
   const [selectedOperator, setSelectedOperator] = useState('');
   const [priceStart, setPriceStart] = useState('');
   const [priceEnd, setPriceEnd] = useState('');
-  const [operators, setOperators] = useState(['=', '<', '>', 'izmedju']);
+  const [operators, setOperators] = useState(['=', '<', '>', 'between']);
   const [searchResult, setSearchResult] = useState([]);
   const navigate = useNavigate();
 

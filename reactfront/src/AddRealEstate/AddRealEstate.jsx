@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { addRealEstate, fetchProfiles } from '../Api/api';
+import './AddRealEstate.css';
 
 function AddRealEstate() {
   const [username, setUsername] = useState('');
@@ -41,44 +42,37 @@ function AddRealEstate() {
       setLocation('');
       setPrice('');
     } catch (error) {
-      console.error('Erros:', error);
+      console.error('Errors:', error);
     }
   };
 
   return (
-    <div>
-      <h2>Add Real Estate</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            Username:
-            <input type="text" value={username} onChange={handleUsernameChange} />
-          </label>
-        </div>
-        <div>
-          <label>
-            Location:
-            <input type="text" value={location} onChange={handleLocationChange} />
-          </label>
-        </div>
-        <div>
-          <label>
-            Price:
-            <input type="text" value={price} onChange={handlePriceChange} />
-          </label>
-        </div>
-        <button type="submit">Add</button>
-      </form>
+    <div className="add-real-estate-container">
+      <div className="add-real-estate-form">
+        <h2>Add Real Estate</h2>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <input type="text" placeholder="Username..." value={username} onChange={handleUsernameChange} />
+          </div>
+          <div>
+            <input type="text" placeholder="Location..." value={location} onChange={handleLocationChange} />
+          </div>
+          <div>
+            <input type="text" placeholder="Price..." value={price} onChange={handlePriceChange} />
+          </div>
+          <button type="submit">Add</button>
+        </form>
+      </div>
 
-      <div>
+      <div className="add-real-estate-list">
         <h2>Approved Profiles</h2>
-        <ul>
+        <div className="suggest-profile-cards">
           {approvedProfiles.map(profile => (
-            <li key={profile.id}>
-              <p>Username: {profile.username}</p>
-            </li>
+            <div key={profile.id} className="suggest-profile-card">
+              <h3 className="suggest-profile-card-username">{profile.username}</h3>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </div>
   );

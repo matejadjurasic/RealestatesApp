@@ -33,7 +33,6 @@ export const FavoritesPage = () => {
 
   return (
     <div>
-      <h1>Favorites</h1>
       <div className="real-estate-grid">
       {favorites?.map((estate) => (
         <div className="real-estate-item" key={estate.id}>

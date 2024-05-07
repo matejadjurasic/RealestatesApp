@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchProfiles, approveProfile, rejectProfile, addProfile } from '../Api/api';
 import { useAuth } from '../Auth/authContext';
+import './suggestprofile.css';
 
 const SuggestProfile = () => {
     const [username, setUsername] = useState('');
@@ -16,7 +17,6 @@ const SuggestProfile = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            console.log('Username:', username);
             await addProfile(username, userId); 
             setSuccessMessage('Successfully forwarded to admin.');
             setShowModal(true);
@@ -60,48 +60,42 @@ const SuggestProfile = () => {
     };
 
     return (
-        <div>
+        <div className="suggest-profile">
+            <h2 className="suggest-profile-header">Profile suggestions</h2>
             {role === 'admin' ? (
-                <div>
-                    <h2>Profile suggestions</h2>
-                    {profiles.length > 0 && (
-                        <div>
-                            <h3>All suggested profiles:</h3>
-                            <ul>
-                                {profiles
-                                    .filter(profile => profile.approval === 0) 
-                                    .map(profile => (
-                                        <li key={profile.id}>
-                                            {profile.username}
-                                            <button onClick={() => handleApprove(profile.id)}>Approve</button> 
-                                            <button onClick={() => handleReject(profile.id)}>Reject</button>
-                                        </li>
-                                    ))}
-                            </ul>
-                        </div>
-                    )}
+                <div className="suggest-profile-cards">
+                    {profiles.length > 0 && profiles
+                        .filter(profile => profile.approval === 0) 
+                        .map(profile => (
+                            <div key={profile.id} className="suggest-profile-card">
+                                <h3 className="suggest-profile-card-username">{profile.username}</h3>
+                                <div className="suggest-profile-buttons">
+                                    <button className="suggest-profile-approve-btn" onClick={() => handleApprove(profile.id)}>Approve</button> 
+                                    <button className="suggest-profile-reject-btn" onClick={() => handleReject(profile.id)}>Reject</button>
+                                </div>
+                            </div>
+                        ))}
                 </div>
             ) : (
-                <div>
-                    <h2>Profile suggestions</h2>
-                    <form onSubmit={handleSubmit}>
+                <div className="suggest-profile-form-container">
+                    <form className="suggest-profile-form" onSubmit={handleSubmit}>
                         <label>
-                            Username:
                             <input
                                 type="text"
+                                placeholder="Enter username"
                                 value={username}
                                 onChange={handleUsernameChange}
                                 required
+                                className="suggest-profile-username-input"
                             />
                         </label>
-                        <button type="submit">Suggest</button>
+                        <button type="submit" className="suggest-profile-suggest-btn">Suggest</button>
                     </form>
-
                     {showModal && (
-                        <div className="modal">
-                            <div className="modal-content">
-                                <span className="close" onClick={() => setShowModal(false)}>&times;</span>
-                                <p>{successMessage}</p>
+                        <div className="suggest-profile-modal">
+                            <div className="suggest-profile-modal-content">
+                                <span className="suggest-profile-close" onClick={() => setShowModal(false)}>&times;</span>
+                                <p className="suggest-profile-success-message">{successMessage}</p>
                             </div>
                         </div>
                     )}

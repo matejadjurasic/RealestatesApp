@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { fetchRealEstates } from '../Api/api';
 import RealEstate from './realEstate';
@@ -34,9 +33,11 @@ const RealEstates = () => {
     setCurrentPage(pageNumber);
   };
 
+
+
   return (
     <div>
-      <h1>Real Estates</h1>
+      
       <div className="real-estate-grid">
       {realEstates?.map((estate) => (
         <div className="real-estate-item" key={estate.id}>
