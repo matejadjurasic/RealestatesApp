@@ -31,7 +31,7 @@ class favoriteController extends Controller
             }
         }
        
-        $perPage = 2; // Number of items per page
+        $perPage = 4; // Number of items per page
         $currentPage = request()->input('page', 1); // Get the current page from the request
         $pagedData = array_slice($realEstatesData, ($currentPage - 1) * $perPage, $perPage);
 
