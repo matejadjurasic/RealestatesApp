@@ -1,23 +1,22 @@
-import React, {useState,useContext} from 'react';
+import React, {useRef} from 'react';
 import './navbar.css'; 
-import Login from '../Login/login';
-import {AuthContext} from '../Auth/authContext';
 import { useAuth } from '../Auth/authContext';
-//import {user} from '../Login/login';
-import Logout from '../Logout/logout';
 import { Link } from "react-router-dom";
 
 
 const Navbar = () => {
 
     const {authenticated,role} = useAuth();
+    //used to safely access elements to avoid null pointer exceptions
+    const menuRef = useRef(null);
+    const menuLinksRef = useRef(null);
 
-    const menu = document.querySelector('.navbar_togglemenu');
-    const menuLinks = document.querySelector('.navList');
-
+    //toggles the navbar active classes
     const handleClick = () =>{
-      menu.classList.toggle('is-active');
-      menuLinks.classList.toggle('active');
+      if (menuRef.current && menuLinksRef.current) {
+        menuRef.current.classList.toggle('is-active');
+        menuLinksRef.current.classList.toggle('active');
+      }
     }
      
     return (
@@ -26,12 +25,12 @@ const Navbar = () => {
             <img src={require('../img/logo.png')} className='logoimage' />
           </div>
           
-          <div className="navbar_togglemenu" onClick={handleClick} >
+          <div className="navbar_togglemenu" onClick={handleClick} ref={menuRef}>
             <span className="bar"></span>
             <span className="bar"></span>
             <span className="bar"></span>
           </div>
-          <ul className="navList">
+          <ul className="navList" onClick={handleClick} ref={menuLinksRef}>
             {authenticated ? (
                 <>
                   <Link to="/">Home</Link>

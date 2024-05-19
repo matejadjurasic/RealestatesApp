@@ -70,17 +70,21 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-        //$latest = User::orderBy('id', 'DESC')->first();
-        //return response()->json($latest, 200, [], JSON_PRETTY_PRINT);
     }
 
+    /**
+     * Registers the user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function register(Request $request){
         $validator = Validator::make($request->all(),[
             'name'=> ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' =>  ['required', 'string', 'min:8', 'confirmed'],
         ]);
-
+        //returns validator errors if any exist
         if($validator->fails()){
             return response()->json($validator->errors(), 200, [], JSON_PRETTY_PRINT);
         }
@@ -89,6 +93,7 @@ class RegisterController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+        //creates the token
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json(['user'=> $user,'token'=> $token], 200, [], JSON_PRETTY_PRINT);
     }

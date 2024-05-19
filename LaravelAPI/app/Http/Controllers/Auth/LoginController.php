@@ -41,6 +41,12 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    /**
+     * Logs in the user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function login(Request $request)
     {
        $input = $request->all();
@@ -50,18 +56,18 @@ class LoginController extends Controller
        ]);
        $email = $request->input('email');
        $user= User::where('email',$email)->firstOrFail();
+       //Token creation
        $token = $user->createToken('auth_token')->plainTextToken;
+       //Returns different response based on type of user
        if (auth()->attempt(array('email'=>$input['email'],'password'=>$input['password'])))
        {
         if (auth()->user()->is_admin==1)
         {
-            //return redirect()->route('admin.home');
             return response()->json(['user'=> auth()->user(),
                                     'token'=> $token,
                                     'tip'=> 'admin'], 200, [], JSON_PRETTY_PRINT);
         } else 
         {
-            //return redirect()->route('home');
             return response()->json(['user'=> auth()->user(),
                                     'token'=> $token,
                                     'tip'=> 'korisnik'], 200, [], JSON_PRETTY_PRINT);
@@ -69,11 +75,16 @@ class LoginController extends Controller
        } else 
        {
         $errorMessage ='Input proper email/password';
-        //return redirect()->route('login')->with('error', 'Input proper email/password');
         return response()->json($errorMessage, 200, [], JSON_PRETTY_PRINT);
        }
     }
 
+    /**
+     * Logs out the user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function logout(Request $request){
         auth()->user()->tokens()->delete();
         return response()->json(['Msg' => 'Odjavljeni ste'], 200, [], JSON_PRETTY_PRINT);

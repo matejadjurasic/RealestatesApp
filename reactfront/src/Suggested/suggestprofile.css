@@ -164,3 +164,7 @@
   font-size: 18px;
   color: #28a745;
 }
+
+.suggest-profile{
+  min-height: 90vh;
+}

@@ -9,23 +9,21 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Support\Jsonable;
 
 define('ENDPOINT_BASE', 'https://graph.facebook.com/v18.0/');
-define('ACCESS_TOKEN', 'EAAQSaZAhOZCsYBOZBUbb0FRdXAOvO9EK7u0fpJMiziphwIEl8luNCimm3YBvzkEq9UlDAXr9SyaHAx3y1ANPBmorbeQ4fg2mzFzwQsdXBT4rHGudfbtZA6jcUrSdE1kcJC6rffy5EOehhZA1ZCMdSse7jqwo5abiZBW6IfzeknrZBZBomgLN4fmQdu7t4Fp7u9wRa');
+define('ACCESS_TOKEN', 'EAAQSaZAhOZCsYBOyxZBa9VurgG1vV3ZCZAYrQC1YYdYYmJT4qFaF6ZAYpDiYcLOkdrjtZBstLobSjAkSzZAwpBUDHZAleCpX5OvV85esYq0yhHyhd03oOZB3oz0synaxZAopj25HhNZAfdyx3fYMt2zIvbC3JZAt7GvNJw4Oz3tOF5j7sRJwZAjr17zGoFJvuZCAbpc8h3b');
 define('PAGE_ID', '163196900218213');
 define('INSTAGRAM_ID', '17841460419692620');
 
 class realEstateController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a paginated listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //$estates = RealEstate::all();
         $estates = RealEstate::latest()->paginate(4);
         
-        //return view('realestates.index',compact('estates'))->with(request()->input('page'));
         return response()->json($estates,200,[],JSON_PRETTY_PRINT);
     }
 
@@ -36,7 +34,6 @@ class realEstateController extends Controller
      */
     public function create()
     {
-        return view('realestates.create');
     }
 
     /**
@@ -47,13 +44,6 @@ class realEstateController extends Controller
      */
     public function store(Request $request)
     {
-        /*
-        $request->validate([
-            'name'=> 'required',
-            'price'=> 'required',
-            'location'=> 'required'
-        ]);
-        */
         $name = $request->name;
         $price = $request->price;
         $location = $request->location;
@@ -79,13 +69,8 @@ class realEstateController extends Controller
             $response = curl_exec($ch);
             curl_close($ch);
             $responseArray = json_decode($response,true);
-
-            // DB::insert('insert into real_estates (username,profile_picture_url,description,location,follows_count,followers_count,price)
-            // values (?,?,?,?,?,?,?)',[$responseArray['business_discovery']['username'],
-            // $responseArray['business_discovery']['profile_picture_url'],$responseArray['business_discovery']['biography'],$location,
-            // $responseArray['business_discovery']['follows_count'],$responseArray['business_discovery']['followers_count'],
-            // $price]);
-
+            
+            //insert instance to database
             DB::table('real_estates')->insert([
                 'username' => $responseArray['business_discovery']['username'],
                 'profile_picture_url' => $responseArray['business_discovery']['profile_picture_url'],
@@ -96,12 +81,11 @@ class realEstateController extends Controller
                 'price' => $price
             ]);
         } catch(\Exception $e){
-            //return redirect()->route('realestates.create')->with('failure','Invalid Parametars');
+            //return error message
             return response()->json($e->getMessage(), 200, [], JSON_PRETTY_PRINT);
         }
         $latest = RealEstate::orderBy('id', 'DESC')->first();
-        //return view('instagram-profile',['responseArray'=>$responseArray]);
-        //return redirect()->route('realestates.index')->with('success','RealEstate created successfully');
+        //return latest entry to database
         return response()->json($latest, 200, [], JSON_PRETTY_PRINT);
     }
 
@@ -115,7 +99,7 @@ class realEstateController extends Controller
     public function show($id)
     {
         $estate = RealEstate::find($id);
-        //return view('realestates.show',compact('estate'));
+
         return response()->json($estate, 200, [], JSON_PRETTY_PRINT);
     }
 
@@ -127,44 +111,39 @@ class realEstateController extends Controller
      */
     public function edit($id)
     {
-        $estate = RealEstate::find($id);
-        return view('realestates.edit',compact('estate'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
         $estate = RealEstate::find($request->id);
-        /*$request->validate([
-            'price'=> 'required',
-            'location'=> 'required'
-        ]);
-        */
-        //$estate->update($request->all());
 
+        //changes the database table with request params
         $estate->price = $request->price;
         $estate->location = $request->location;
 
+        //saves the changes
         $estate->save();
 
-        //return redirect()->route('realestates.index')->with('success','RealEstate updated successfully');
         return response()->json($estate, 200, [], JSON_PRETTY_PRINT);
     }
 
+    /**
+     * Update the api data in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function updateapi(Request $request)
     {
         $estate = RealEstate::find($request->id);
-
         $id = intval($request->id);
-
         $name = $estate->username;
-       
         $endpoint = ENDPOINT_BASE . INSTAGRAM_ID;
     
         //endpoint params
@@ -197,22 +176,12 @@ class realEstateController extends Controller
             
             DB::table('real_estates')->where('id', $id)->update($updateDetails);
 
-            /*$estate->update([
-            'profile_picture_url' => $responseArray['business_discovery']['profile_picture_url'],
-            'description' => $responseArray['business_discovery']['biography'],
-            'follows_count' => $responseArray['business_discovery']['follows_count'],
-            'followers_count' => $responseArray['business_discovery']['followers_count']
-            ]);
-            $estate->save();*/
         } catch(\Exception $e){
-            //return redirect()->route('realestates.index')->with('failure',$e->getMessage());
+            //returns error message
             return response()->json($e->getMessage(), 200, [], JSON_PRETTY_PRINT);
-            
         }
-        //return view('instagram-profile',['responseArray'=>$responseArray]);
-        //return redirect()->route('realestates.index')->with('success','RealEstate updated successfully');
+        //returns the updated estate
         return response()->json($estate, 200, [], JSON_PRETTY_PRINT);
-        //return response()->json($responseArray, 200, [], JSON_PRETTY_PRINT);
     }
 
     /**
@@ -225,10 +194,8 @@ class realEstateController extends Controller
     {
         $estate = RealEstate::find($id);
 
-        //DB::delete('delete from real_estates where id = ?',[$id]);
         DB::table('real_estates')->where('id', $id)->delete();
 
-        //return redirect()->route('realestates.index');
         return response()->json($estate, 200, [], JSON_PRETTY_PRINT);
     }
 }

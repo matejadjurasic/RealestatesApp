@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState,useEffect } from 'react'
 import { addFavorite,removeFavorite,fetchFavorites,fetchAllFavorites } from '../Api/api';
-import { useLocation } from 'react-router-dom';
 import { useAuth } from '../Auth/authContext';
 
 export const useFavorites = (realEstateId) => {
@@ -11,9 +10,6 @@ export const useFavorites = (realEstateId) => {
  
 
   useEffect(()=>{
-    
-     
-    
     const fetchFavoritesData = async () => {
       try {
         // Fetch favorites only if user is authenticated
@@ -34,7 +30,6 @@ export const useFavorites = (realEstateId) => {
 
   const toggleFavorite = async () => {
     try {
-
       if(isFavorite){
        const removedFavorites = await removeFavorite(realEstateId);
        setFavorites(removedFavorites);

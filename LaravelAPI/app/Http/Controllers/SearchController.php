@@ -42,10 +42,9 @@ class SearchController extends Controller
         }
     }
 
-    //$data['realestates_details'] = $query->get();
-    $data['realestates_details'] = $query->paginate(2);
+    $data['realestates_details'] = $query->paginate(4);
 
-    //return view('realestates_details.index', $data);
+    //returns paginated query
     return response()->json($data, 200, [], JSON_PRETTY_PRINT);
 }
 

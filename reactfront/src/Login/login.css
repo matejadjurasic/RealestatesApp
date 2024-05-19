@@ -51,3 +51,7 @@
   color: red;
   margin-top: 10px;
 }
+
+.container {
+  min-height: 90vh;
+}

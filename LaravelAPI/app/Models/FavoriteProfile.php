@@ -18,13 +18,10 @@ class FavoriteProfile extends Model
     {
         parent::boot();
 
+        // trigger to increment number of favorites
         static::created(function ($favorite) {
             $favorite->user->increment('favorite');
         });
-
-        /*static::deleted(function ($favorite) {
-            $favorite->user->decrement('favorite');
-        });*/
     }
 
     public function user() {

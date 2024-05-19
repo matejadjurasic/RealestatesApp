@@ -33,19 +33,22 @@ export const User = () => {
   };
 
   return (
-    <div className="user-container">
-      <h1>My Profile</h1>
-      <p>Username: {user.name}</p>
-      <p>Email: {user.email}</p>
-      <input
-        type="text"
-        placeholder="Set new password..."
-        value={newPassword}
-        onChange={(e) => setNewPassword(e.target.value)}
-      />
-      <button onClick={resetPassword}>Reset Password</button>
-      {successMessage && <p className="success-message">{successMessage}</p>}
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+    <div className="container">
+      <div className="user-container">
+        <h1>My Profile</h1>
+        <p>Username: {user.name}</p>
+        <p>Email: {user.email}</p>
+        <p>Number of favorites: {user.favorite}</p>
+        <input
+          type="text"
+          placeholder="Set new password..."
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+        />
+        <button onClick={resetPassword}>Reset Password</button>
+        {successMessage && <p className="success-message">{successMessage}</p>}
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
+      </div>
     </div>
   );
 };

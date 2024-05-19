@@ -8,8 +8,7 @@ const RealEstates = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-
-
+  //fetches data and number of pages
   useEffect(() => {
     fetchRealEstates(currentPage).then((data) => { 
       setRealEstates(data['data']);
@@ -32,8 +31,6 @@ const RealEstates = () => {
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
-
 
   return (
     <div>

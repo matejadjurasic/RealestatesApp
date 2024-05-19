@@ -15,13 +15,11 @@ class favoriteController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * @param App\Models\User
      */
     public function index(User $user)
     {
         $favorites = FavoriteProfile::where('user_id', auth()->user()->id)->get();
-        //$favorites = FavoriteProfile::where('user_id', auth()->user()->id)->paginate(2);
-        //->with('real_estates')
-        //->get();
         $realEstatesData = [];
 
         foreach ($favorites as $favorite) {
@@ -42,10 +40,14 @@ class favoriteController extends Controller
 
         // Return the response with the paginated real estate data
         return response()->json($paginator, 200, [], JSON_PRETTY_PRINT);
-
-        //return response()->json($favorites, 200, [], JSON_PRETTY_PRINT);
     }
 
+    /**
+     * Return all user favorites.
+     *
+     * @return \Illuminate\Http\Response
+     * @param App\Models\User
+     */
     public function getAll(User $user)
     {
         $favorites = FavoriteProfile::where('user_id', auth()->user()->id)->get();
@@ -60,21 +62,21 @@ class favoriteController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, $id)
     {
         auth()->user()->favoriteProfiles()->create(['realestate_id' => $id]);
-
-        //return redirect()->route('realestates.index')->with('success', 'Real estate added to favorites');
         $favorites = FavoriteProfile::where('user_id', auth()->user()->id)->get();
+
+        //returns all user favorites
         return response()->json($favorites, 200, [], JSON_PRETTY_PRINT);
     }
 
@@ -86,7 +88,6 @@ class favoriteController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -97,7 +98,6 @@ class favoriteController extends Controller
      */
     public function edit($id)
     {
-        //
     }
 
     /**
@@ -109,7 +109,6 @@ class favoriteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
     }
 
     /**
@@ -121,9 +120,11 @@ class favoriteController extends Controller
     public function destroy($id)
     {
         auth()->user()->favoriteProfiles()->where('realestate_id', $id)->delete();
+        //trigger for deacreasing the number of favorites
         auth()->user()->decrement('favorite');
-        //return back()->with('success', 'Real estate removed from favorites');
         $favorites = FavoriteProfile::where('user_id', auth()->user()->id)->get();
+
+        //returns all favorites
         return response()->json($favorites, 200, [], JSON_PRETTY_PRINT);
     }
 }

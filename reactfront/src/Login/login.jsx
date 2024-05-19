@@ -1,7 +1,6 @@
 import React, { useState} from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { login } from '../Api/api.js';
-import { useAuth } from '../Auth/authContext.jsx';
 import "./login.css";
 
 function Login() {
@@ -34,23 +33,25 @@ function Login() {
     };
 
     return (
-        <div className='login-container'>
-            <h2>Login</h2>
-            <div className='login-form'>
-            <input
-            type="text"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value )}
-            />
-            <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value )}
-            />
-            <button onClick={handleLogin}>Login</button>
-            <p>{errorMessage}</p>
+        <div className="container">
+            <div className='login-container'>
+                <h2>Login</h2>
+                <div className='login-form'>
+                <input
+                type="text"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value )}
+                />
+                <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value )}
+                />
+                <button onClick={handleLogin}>Login</button>
+                <p>{errorMessage}</p>
+                </div>
             </div>
         </div>
     );

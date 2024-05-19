@@ -2,15 +2,15 @@
 import React,{useState} from 'react';
 import { useAuth } from '../Auth/authContext';
 import { deleteRealEstate, updateApiRealEstate, updateRealEstate } from '../Api/api';
-import { MdFavoriteBorder,MdFavorite } from "react-icons/md";
 import { FcLikePlaceholder,FcLike } from "react-icons/fc";
 import useFavorites from '../Favorites/favorites';
 import './realEstates.css';
 
 const RealEstate = ({ realEstate }) => {
-
+  
   const {authenticated,role} = useAuth();
 
+  //get the real estate attributes
   const {
     id,
     username,
@@ -24,8 +24,7 @@ const RealEstate = ({ realEstate }) => {
 
   const [rsPrice, setRsPrice] = useState(price);
   const [rsLocation, setRsLocation] = useState(location);
-  
-  
+  //custom hook for the favorites button
   const [isFavorite,toggleFavorite] = useFavorites(id);
   
   const searchParams = new URLSearchParams( {
@@ -44,6 +43,7 @@ const RealEstate = ({ realEstate }) => {
     updateApiRealEstate(id).then(()=> window.location.reload());
   }
 
+  //shows individual realestate
   const handleClick = () =>{
     window.location.href = `/estate?${searchParams}`
   }

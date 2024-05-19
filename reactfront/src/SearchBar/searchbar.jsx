@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchRealEstates,search } from '../Api/api';
-import SearchResult from './SearchResult';
+import { search } from '../Api/api';
 import {  BrowserRouter as Router, Route, Link, useNavigate} from 'react-router-dom';
 import './searchbar.css';
 
@@ -12,19 +11,17 @@ const SearchBar = ({ onSearch }) => {
   const [priceStart, setPriceStart] = useState('');
   const [priceEnd, setPriceEnd] = useState('');
   const [operators, setOperators] = useState(['=', '<', '>', 'between']);
-  const [searchResult, setSearchResult] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     search('','','','','').then((data) => {
-      //const estateData = (data && data.estate) ? data.estate : [];
       const allLocations = data['locations'];
       setLocations(allLocations);
     });
   }, []);
 
 
-
+  //preusmeravanje na search url
   const handleSearch = async () => {
     try {
       const searchParams = new URLSearchParams( {
@@ -36,7 +33,6 @@ const SearchBar = ({ onSearch }) => {
       }).toString();
 
       window.location.href = `/search?${searchParams}`;
-      //onSearch(searchResults);
     } catch (error) {
       console.error('Error during search:', error);
     }

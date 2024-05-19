@@ -15,6 +15,7 @@ export const ShowEstate = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
 
+    //get id from url
     const id = queryParams.get('id');
 
     const icon = new Icon({
@@ -31,12 +32,11 @@ export const ShowEstate = () => {
           } catch (error) {
             console.error('Error fetching estate:', error);
           }
-        };
-        
-        fetchRealEstate();  
-        
+        }; 
+        fetchRealEstate();    
     },[id]);
 
+    //get coordinates from estate location
     const fetchCoordinates = async () => {
         try{
             getCoordinates(estate['location']).then((data) => {

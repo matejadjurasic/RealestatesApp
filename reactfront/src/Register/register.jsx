@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { register } from '../Api/api';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './register.css'; 
 
 export const Register = () => {
@@ -34,34 +34,36 @@ export const Register = () => {
 
 
   return (
-    <div className="register-container"> 
-            <h2>Register</h2>
-            <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value )}
-            />
-            <input
-            type="text"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value )}
-            />
-            <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value )}
-            />
-            <input
-            type="password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value )}
-            />
-            <button className="register-button" onClick={handleRegister}>Register</button> 
-            <p className="error-message">{errorMessage}</p> 
+    <div className="container">
+        <div className="register-container"> 
+                <h2>Register</h2>
+                <input
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value )}
+                />
+                <input
+                type="text"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value )}
+                />
+                <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value )}
+                />
+                <input
+                type="password"
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value )}
+                />
+                <button className="register-button" onClick={handleRegister}>Register</button> 
+                <p className="error-message">{errorMessage}</p> 
+        </div>
     </div>
   )
 }

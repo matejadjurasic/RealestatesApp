@@ -8,10 +8,9 @@ const SearchResult = () => {
   const[searchResult,setSearchResult]=useState([]);
   const[currentPage,setCurrentPage]=useState(1);
   const[totalPages,setTotalPages]=useState(1);
-  
   const location = useLocation();
+  //get parametars from url
   const queryParams = new URLSearchParams(location.search);
-
   const searchTerm = queryParams.get('q');
   const selectedLocation = queryParams.get('location_name');
   const selectedOperator = queryParams.get('operator');
