@@ -15,8 +15,8 @@ This repository contains a full-stack application with a Laravel backend and a R
 ### Clone the repository
 
 ```sh
-git clone https://github.com/elab-development/internet-tehnologije-projekat-nekretnineinstagram_2020_0085.git
-cd internet-tehnologije-projekat-nekretnineinstagram_2020_0085
+git clone https://github.com/matejadjursic/RealestatesApp.git
+cd RealestatesAPP
 ```
 
 ### Backend Setup (Laravel)
