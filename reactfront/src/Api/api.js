@@ -8,7 +8,7 @@ const token = Cookies.get('token');
 
 
 export async function login2(email, password) {
-    const response = await fetch(`http://localhost:8000/api/login`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -28,7 +28,7 @@ export async function login2(email, password) {
 
 export async function login(email, password) {
     try {
-        const response = await axios.post('http://localhost:8000/api/login', {
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/login`, {
             email,
             password
         },
@@ -53,7 +53,7 @@ export async function login(email, password) {
 }
 
 export async function register(name, email, password, password_confirmation) {
-    const response = await fetch('http://localhost:8000/api/register', {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/register`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -66,7 +66,7 @@ export async function register(name, email, password, password_confirmation) {
 };
 
 export async function logout() {
-    const response = await fetch('http://localhost:8000/api/logout', {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/logout`, {
         method: "POST",
         headers: {
             "Authorization": `Bearer ${token}`
@@ -80,7 +80,7 @@ export async function logout() {
 };
 
 export async function getUser() {
-    const response = await fetch(`http://localhost:8000/api/user`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/user`, {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${token}`
@@ -92,7 +92,7 @@ export async function getUser() {
 };
 
 export async function reset(email, password_new) {
-    const response = await fetch(`http://localhost:8000/api/reset`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/reset`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -115,7 +115,7 @@ export async function search(username, location_name, operator, price_start, pri
         page,
     });
 
-    const response = await fetch(`http://localhost:8000/api/realestates_details?${queryParams}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/realestates_details?${queryParams}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -130,7 +130,7 @@ export async function fetchRealEstates(page) {
     const queryParams = new URLSearchParams({
         page,
     });
-    const response = await fetch(`http://localhost:8000/api/realestates?${queryParams}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/realestates?${queryParams}`, {
         method: "GET",
         headers: {
         },
@@ -141,7 +141,7 @@ export async function fetchRealEstates(page) {
 };
 
 export async function showRealEstate(id) {
-    const response = await fetch(`http://localhost:8000/api/realestates/${id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/realestates/${id}`, {
         method: "GET",
         headers: {
         },
@@ -152,7 +152,7 @@ export async function showRealEstate(id) {
 };
 
 export async function addRealEstate(name,price,location) {
-    const response = await fetch(`http://localhost:8000/api/realestates/${name}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/realestates/${name}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -166,7 +166,7 @@ export async function addRealEstate(name,price,location) {
 };
 
 export async function deleteRealEstate(id) {
-    const response = await fetch(`http://localhost:8000/api/realestates/${id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/realestates/${id}`, {
         method: "DELETE",
         headers: {
             "Authorization": `Bearer ${token}`
@@ -178,7 +178,7 @@ export async function deleteRealEstate(id) {
 };
 
 export async function updateRealEstate(id,price,location) {
-    const response = await fetch(`http://localhost:8000/api/realestates/${id}/${price}/${location}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/realestates/${id}/${price}/${location}`, {
         method: "POST",
         headers: {
             "Authorization": `Bearer ${token}`
@@ -190,7 +190,7 @@ export async function updateRealEstate(id,price,location) {
 };
 
 export async function updateApiRealEstate(id) {
-    const response = await fetch(`http://localhost:8000/api/realestates/${id}/edit/updateapi`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/realestates/${id}/edit/updateapi`, {
         method: "PUT",
         headers: {
             "Authorization": `Bearer ${token}`
@@ -205,7 +205,7 @@ export async function fetchFavorites(page) {
     const queryParams = new URLSearchParams({
         page,
     });
-    const response = await fetch(`http://localhost:8000/api/favorites?${queryParams}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/favorites?${queryParams}`, {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${token}`
@@ -217,7 +217,7 @@ export async function fetchFavorites(page) {
 };
 
 export async function fetchAllFavorites() {
-    const response = await fetch('http://localhost:8000/api/favorites/all', {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/favorites/all`, {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${token}`
@@ -229,7 +229,7 @@ export async function fetchAllFavorites() {
 };
 
 export async function addFavorite(id) {
-    const response = await fetch(`http://localhost:8000/api/favorites/add/${id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/favorites/add/${id}`, {
         method: "POST",
         headers: {
             "Authorization": `Bearer ${token}`
@@ -241,7 +241,7 @@ export async function addFavorite(id) {
 };
 
 export async function removeFavorite(id) {
-    const response = await fetch(`http://localhost:8000/api/favorites/remove/${id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/favorites/remove/${id}`, {
         method: "DELETE",
         headers: {
             "Authorization": `Bearer ${token}`
@@ -253,7 +253,7 @@ export async function removeFavorite(id) {
 };
 
 export async function fetchProfiles() {
-    const response = await fetch('http://localhost:8000/api/suggested-profiles', {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/suggested-profiles`, {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${token}`
@@ -265,7 +265,7 @@ export async function fetchProfiles() {
 };
 
 export async function showProfile(id) {
-    const response = await fetch(`http://localhost:8000/api/suggested-profiles/${id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/suggested-profiles/${id}`, {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${token}`
@@ -277,7 +277,7 @@ export async function showProfile(id) {
 };
 
 export async function approveProfile(id) {
-    const response = await fetch(`http://localhost:8000/api/suggested-profiles/${id}/approve`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/suggested-profiles/${id}/approve`, {
         method: "POST",
         headers: {
             "Authorization": `Bearer ${token}`
@@ -289,7 +289,7 @@ export async function approveProfile(id) {
 };
 
 export async function rejectProfile(id) {
-    const response = await fetch(`http://localhost:8000/api/suggested-profiles/${id}/reject`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/suggested-profiles/${id}/reject`, {
         method: "POST",
         headers: {
             "Authorization": `Bearer ${token}`
@@ -301,7 +301,7 @@ export async function rejectProfile(id) {
 };
 
 export async function addProfile(username,user_id) {
-    const response = await fetch(`http://localhost:8000/api/suggested-profiles/create/${username}/${user_id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/suggested-profiles/create/${username}/${user_id}`, {
         method: "POST",
         headers: {
             "Authorization": `Bearer ${token}`
@@ -313,7 +313,7 @@ export async function addProfile(username,user_id) {
 };
 
 export async function getCoordinates(city) {
-    const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=752667ff0ad1f03d7abff59e2f700d4b`, {
+    const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${process.env.REACT_APP_WEATHER_APP_ID}`, {
         method: "GET",
     });
 

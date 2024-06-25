@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Support\Jsonable;
 
 define('ENDPOINT_BASE', 'https://graph.facebook.com/v18.0/');
-define('ACCESS_TOKEN', 'EAAQSaZAhOZCsYBOyxZBa9VurgG1vV3ZCZAYrQC1YYdYYmJT4qFaF6ZAYpDiYcLOkdrjtZBstLobSjAkSzZAwpBUDHZAleCpX5OvV85esYq0yhHyhd03oOZB3oz0synaxZAopj25HhNZAfdyx3fYMt2zIvbC3JZAt7GvNJw4Oz3tOF5j7sRJwZAjr17zGoFJvuZCAbpc8h3b');
-define('PAGE_ID', '163196900218213');
-define('INSTAGRAM_ID', '17841460419692620');
 
 class realEstateController extends Controller
 {
@@ -47,12 +44,14 @@ class realEstateController extends Controller
         $name = $request->name;
         $price = $request->price;
         $location = $request->location;
-        $endpoint = ENDPOINT_BASE . INSTAGRAM_ID;
+        //$endpoint = ENDPOINT_BASE . INSTAGRAM_ID;
+        $endpoint = ENDPOINT_BASE . env('INSTAGRAM_ID');
     
         //endpoint params
         $igParams = array(
             'fields' => 'business_discovery.username('.$name.'){username,profile_picture_url,biography,follows_count,followers_count}',
-            'access_token' => ACCESS_TOKEN
+            //'access_token' => ACCESS_TOKEN
+            'access_token' => env('ACCESS_TOKEN')
         );
     
         //add parametars to endpoint
@@ -144,12 +143,14 @@ class realEstateController extends Controller
         $estate = RealEstate::find($request->id);
         $id = intval($request->id);
         $name = $estate->username;
-        $endpoint = ENDPOINT_BASE . INSTAGRAM_ID;
+        //$endpoint = ENDPOINT_BASE . INSTAGRAM_ID;
+        $endpoint = ENDPOINT_BASE . env('INSTAGRAM_ID');
     
         //endpoint params
         $igParams = array(
             'fields' => 'business_discovery.username('.$name.'){username,profile_picture_url,biography,follows_count,followers_count}',
-            'access_token' => ACCESS_TOKEN
+            //'access_token' => ACCESS_TOKEN
+            'access_token' => env('ACCESS_TOKEN')
         );
     
         //add parametars to endpoint

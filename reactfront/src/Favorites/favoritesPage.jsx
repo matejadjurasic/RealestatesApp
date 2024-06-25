@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { fetchFavorites } from '../Api/api';
 import RealEstate from '../RealEstates/realEstate';
+import './favorites.css';
 
 export const FavoritesPage = () => {
 
@@ -33,12 +34,14 @@ export const FavoritesPage = () => {
 
   return (
     <div>
-      <div className="real-estate-grid">
-      {favorites?.map((estate) => (
-        <div className="real-estate-item" key={estate.id}>
-        <RealEstate key={estate.id} realEstate={estate} />
+      <div className="container">
+        <div className="real-estate-grid">
+        {favorites?.map((estate) => (
+          <div className="real-estate-item" key={estate.id}>
+          <RealEstate key={estate.id} realEstate={estate} />
+          </div>
+        ))}
         </div>
-      ))}
       </div>
       <div className="pagination">
         <button onClick={handlePreviousPage} disabled={currentPage === 1}>Previous</button>
