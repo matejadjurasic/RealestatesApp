@@ -7,7 +7,7 @@ This repository contains a full-stack application with a Laravel backend and a R
 - [Node.js](https://nodejs.org/) (v12 or higher)
 - [Composer](https://getcomposer.org/)
 - [PHP](https://www.php.net/) (v7.3 or higher)
-- [MySQL](https://www.mysql.com/) or any other supported database
+- [XAMPP](https://www.apachefriends.org/download.html) or any other supported database
 - [Git](https://git-scm.com/)
 
 ## Getting Started
@@ -103,6 +103,14 @@ Ensure that you do not commit your `.env` file to version control. Store your AP
 #### Frontend (.env)
 
 Create a `.env` file in the `frontend` directory to store environment variables for the React app:
+
+## About the app
+
+Our application enables the search of Instagram accounts and provides users with an intuitive and efficient experience for managing various properties based on those accounts. Administrators have the ability to add new accounts to the system, as well as edit and delete existing accounts. Additionally, they can review new profile suggestions submitted by users and decide whether to approve or reject them. This part of the platform is crucial for maintaining the relevance and quality of the database.
+
+Platform users have access to an advanced search, which includes various filters such as location, profile username, and property price range. These filters are designed to help users precisely tailor their searches to their interests. The application also allows users to suggest new profiles for addition to the system.
+
+One of the important features for users is the ability to mark favorite profiles. This option enables users to quickly access their favorite Instagram profiles.
 
 
 
